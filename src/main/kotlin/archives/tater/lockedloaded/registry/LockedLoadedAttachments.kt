@@ -1,6 +1,7 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
+import archives.tater.lockedloaded.enchantment.PierceDeflection
 import archives.tater.lockedloaded.util.McUnit
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
@@ -28,6 +29,11 @@ object LockedLoadedAttachments {
     val IGNORE_OWNER = register<McUnit>("ignore_owner") {
         persistent(McUnit.CODEC)
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
+    }
+
+    @JvmField
+    val PIERCE_DEFLECTION = register<Set<PierceDeflection>>("pierce_deflection") {
+        persistent(PierceDeflection.SET_CODEC)
     }
 
     @JvmField

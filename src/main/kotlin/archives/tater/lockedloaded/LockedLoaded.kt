@@ -18,6 +18,7 @@ object LockedLoaded : ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		LockedLoadedEnchantmentEffects.init()
+		LockedLoadedEnchantments.init()
 		LockedLoadedAttachments.init()
 		LockedLoadedComponents.init()
 		LockedLoadedConditions.init()

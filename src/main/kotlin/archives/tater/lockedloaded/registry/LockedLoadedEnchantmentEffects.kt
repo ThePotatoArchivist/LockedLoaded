@@ -3,6 +3,7 @@ package archives.tater.lockedloaded.registry
 import archives.tater.lockedloaded.LockedLoaded
 import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
 import archives.tater.lockedloaded.enchantment.LoadMultiple
+import archives.tater.lockedloaded.enchantment.PierceDeflection
 import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
 import archives.tater.lockedloaded.util.McUnit
 import archives.tater.lockedloaded.util.validatedListCodec
@@ -71,9 +72,13 @@ object LockedLoadedEnchantmentEffects {
     ))
 
     @JvmField
+    val PROJECTILE_PIERCE_DEFLECTION = register("projectile_pierce_deflection", validatedListCodec(
+        ConditionalEffect.codec(PierceDeflection.SET_CODEC),
+        LootContextParamSets.ENCHANTED_ITEM
+    ))
+
+    @JvmField
     val CROSSBOW_SPIN = register("crossbow_spin", LevelBasedValue.CODEC)
 
-    fun init() {
-
-    }
+    fun init() {}
 }

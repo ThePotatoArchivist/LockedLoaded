@@ -20,3 +20,8 @@ inline fun <T: Any, U: Any> getFirstEnchantmentComponent(stack: ItemStack, type:
  */
 fun <T : Validatable> validatedListCodec(elementCodec: Codec<T>, paramSet: ContextKeySet): Codec<List<T>> =
     elementCodec.listOf().validate(Validatable.listValidatorForContext<T>(paramSet))
+
+fun <T, C : Collection<T>> Codec<List<T>>.collection(constructor: (List<T>) -> C): Codec<C> = xmap(
+    constructor,
+    Collection<T>::toList
+)
