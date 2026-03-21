@@ -1,0 +1,51 @@
+{
+	"schemaVersion": 1,
+	"id": "lockedloaded",
+	"version": "${version}",
+	"name": "Locked & Loaded",
+	"description": "Gun-inspired crossbow enchantments",
+	"authors": [
+		"ThePotatoArchivist"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/project/locked-n-loaded",
+		"sources": "https://github.com/ThePotatoArchivist/LockedLoaded/"
+	},
+	"license": "LGPL-3.0-or-later",
+	"icon": "assets/lockedloaded/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "archives.tater.lockedloaded.LockedLoaded",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "archives.tater.lockedloaded.LockedLoadedClient",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "archives.tater.lockedloaded.LockedLoadedDataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"lockedloaded.mixins.json",
+		{
+			"config": "lockedloaded.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.1-",
+		"java": ">=25",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
