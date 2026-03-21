@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import com.mojang.serialization.Codec
 import net.minecraft.network.codec.ByteBufCodecs
 
-@Suppress("UnstableApiUsage")
 object LockedLoadedAttachments {
     private fun <T: Any> register(path: String, init: AttachmentRegistry.Builder<T>.() -> Unit = {}): AttachmentType<T> =
         AttachmentRegistry.create(LockedLoaded.id(path), init)

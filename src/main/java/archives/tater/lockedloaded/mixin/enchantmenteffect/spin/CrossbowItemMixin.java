@@ -29,7 +29,6 @@ import org.jspecify.annotations.Nullable;
 import static archives.tater.lockedloaded.util.OmniUtil.getFirstEnchantmentComponent;
 import static java.util.Objects.requireNonNullElse;
 
-@SuppressWarnings("UnstableApiUsage")
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowItemMixin {
     @Shadow

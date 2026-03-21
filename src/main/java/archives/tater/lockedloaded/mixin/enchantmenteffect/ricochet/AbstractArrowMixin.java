@@ -26,7 +26,6 @@ import org.jspecify.annotations.Nullable;
 
 import static java.lang.Math.max;
 
-@SuppressWarnings("UnstableApiUsage")
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin extends Projectile {
     @Shadow

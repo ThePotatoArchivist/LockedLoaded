@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
-@SuppressWarnings("UnstableApiUsage")
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin extends Projectile {
 

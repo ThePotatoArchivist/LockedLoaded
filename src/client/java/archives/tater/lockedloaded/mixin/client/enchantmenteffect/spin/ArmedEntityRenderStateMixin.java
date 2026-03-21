@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.world.entity.LivingEntity;
 
-@SuppressWarnings("UnstableApiUsage")
 @Mixin(ArmedEntityRenderState.class)
 public class ArmedEntityRenderStateMixin {
     @Inject(
