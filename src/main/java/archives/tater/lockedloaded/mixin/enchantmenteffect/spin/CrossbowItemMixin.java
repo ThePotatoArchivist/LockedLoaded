@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 
 import org.jspecify.annotations.Nullable;
 
-import static archives.tater.lockedloaded.util.OmniUtil.getFirstEnchantmentComponent;
+import static archives.tater.lockedloaded.util.LockedLoadedUtil.getFirstEnchantmentComponent;
 import static java.util.Objects.requireNonNullElse;
 
 @Mixin(CrossbowItem.class)
