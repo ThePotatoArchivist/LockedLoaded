@@ -8,12 +8,15 @@ import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
 import archives.tater.lockedloaded.util.McUnit
 import archives.tater.lockedloaded.util.validatedListCodec
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.LevelBasedValue
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctions
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 
 
@@ -26,6 +29,10 @@ object LockedLoadedEnchantmentEffects {
 
     private fun <T: Any> register(path: String, codec: Codec<T>) = register(path) {
         persistent(codec)
+    }
+
+    private fun registerEntityEffect(path: String, codec: MapCodec<out EnchantmentEntityEffect>) {
+        Registry.register(BuiltInRegistries.ENCHANTMENT_ENTITY_EFFECT_TYPE, LockedLoaded.id(path), codec)
     }
 
     // First one will take priority
@@ -74,6 +81,12 @@ object LockedLoadedEnchantmentEffects {
     @JvmField
     val PROJECTILE_PIERCE_DEFLECTION = register("projectile_pierce_deflection", validatedListCodec(
         ConditionalEffect.codec(PierceDeflection.SET_CODEC),
+        LootContextParamSets.ENCHANTED_ITEM
+    ))
+
+    @JvmField
+    val MODIFY_PROJECTILE_ITEM = register("modify_projectile_item", validatedListCodec(
+        ConditionalEffect.codec(LootItemFunctions.CODEC),
         LootContextParamSets.ENCHANTED_ITEM
     ))
 

@@ -3,10 +3,18 @@ package archives.tater.lockedloaded.datagen
 import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
 import archives.tater.lockedloaded.enchantment.LoadMultiple
 import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
+import archives.tater.lockedloaded.enchantment.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.McUnit
+import net.minecraft.advancements.criterion.CollectionPredicate
+import net.minecraft.advancements.criterion.DataComponentMatchers.Builder.components
+import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.criterion.MinMaxBounds.Ints
+import net.minecraft.core.Holder
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.component.predicates.DataComponentPredicates
+import net.minecraft.core.component.predicates.FireworksPredicate
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -20,6 +28,8 @@ import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.item.enchantment.effects.SetValue
+import net.minecraft.world.level.storage.loot.predicates.MatchTool.toolMatches
+import java.util.*
 
 object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
     override fun run(registry: BootstrapContext<Enchantment>) {
@@ -95,6 +105,35 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_RICOCHET, AddValue(LevelBasedValue.perLevel(1f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_IGNORE_OWNER, McUnit.INSTANCE)
             withEffect(EnchantmentEffectComponents.PROJECTILE_PIERCING, AddValue(LevelBasedValue.perLevel(1f)))
+        }
+
+        register(LockedLoadedEnchantments.ROCKETRY, definition(
+            crossbowEnchantable,
+            1,
+            1,
+            constantCost(20),
+            constantCost(50),
+            8,
+            EquipmentSlotGroup.MAINHAND
+        )) {
+            withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, Holder.direct(
+                RandomFireworks(
+                    predicates = listOf(
+                        toolMatches(ItemPredicate.Builder().apply { // TODO this won't work
+                            withComponents(components().apply {
+                                partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
+                                    Optional.of(CollectionPredicate(
+                                        Optional.empty(),
+                                        Optional.empty(),
+                                        Optional.of(Ints.exactly(0))
+                                    )),
+                                    Ints.ANY
+                                ))
+                            }.build())
+                        }).build()
+                    ),
+                )
+            ))
         }
 
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(

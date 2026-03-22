@@ -5,6 +5,7 @@ package archives.tater.lockedloaded.util
 import com.mojang.serialization.Codec
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.util.RandomSource
 import net.minecraft.util.context.ContextKeySet
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
@@ -34,3 +35,6 @@ fun getDirection(entity: Entity, position: Vec3): Direction {
     val normalizedOffset = (position - center).multiply(1.0 / entity.bbWidth, 1.0 / entity.bbHeight, 1.0 / entity.bbWidth)
     return Direction.getApproximateNearest(normalizedOffset)
 }
+
+fun <T> pick(items: List<T>, random: RandomSource): T =
+    items[random.nextInt(items.size)]

@@ -11,6 +11,7 @@
     "enchantmenteffect.loadmultiple.CrossbowItemMixin",
     "enchantmenteffect.loadmultiple.ItemMixin",
     "enchantmenteffect.loadmultiple.ProjectileWeaponItemMixin",
+    "enchantmenteffect.modifyprojectileitem.ProjectileWeaponItemMixin",
     "enchantmenteffect.piercedeflection.AbstractArrowMixin",
     "enchantmenteffect.piercedeflection.AbstractDragonSittingPhaseMixin",
     "enchantmenteffect.piercedeflection.BreezeMixin",
