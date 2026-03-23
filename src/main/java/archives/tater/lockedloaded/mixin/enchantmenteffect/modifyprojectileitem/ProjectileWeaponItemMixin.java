@@ -33,7 +33,7 @@ public class ProjectileWeaponItemMixin {
             Enchantment.applyEffects(
                     enchantment.value().getEffects(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM),
                     context,
-                    effect -> result.setValue(effect.value().apply(result.get(), context))
+                    effect -> result.setValue(effect.apply(result.get(), context))
             );
         });
 

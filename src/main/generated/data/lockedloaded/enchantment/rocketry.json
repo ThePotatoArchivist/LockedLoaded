@@ -1,0 +1,93 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.lockedloaded.rocketry"
+  },
+  "effects": {
+    "lockedloaded:modify_projectile_item": [
+      {
+        "effect": {
+          "function": "minecraft:sequence",
+          "functions": [
+            {
+              "function": "minecraft:filtered",
+              "item_filter": {
+                "predicates": {
+                  "minecraft:fireworks": {
+                    "explosions": {
+                      "size": 0
+                    },
+                    "flight_duration": {
+                      "max": 1
+                    }
+                  }
+                }
+              },
+              "on_pass": {
+                "function": "lockedloaded:random_fireworks",
+                "shapes": [
+                  "small_ball"
+                ]
+              }
+            },
+            {
+              "function": "minecraft:filtered",
+              "item_filter": {
+                "predicates": {
+                  "minecraft:fireworks": {
+                    "explosions": {
+                      "size": 0
+                    },
+                    "flight_duration": 2
+                  }
+                }
+              },
+              "on_pass": {
+                "explosions": 2,
+                "function": "lockedloaded:random_fireworks",
+                "shapes": [
+                  "small_ball",
+                  "star",
+                  "creeper"
+                ]
+              }
+            },
+            {
+              "function": "minecraft:filtered",
+              "item_filter": {
+                "predicates": {
+                  "minecraft:fireworks": {
+                    "explosions": {
+                      "size": 0
+                    },
+                    "flight_duration": {
+                      "min": 3
+                    }
+                  }
+                }
+              },
+              "on_pass": {
+                "explosions": 3,
+                "function": "lockedloaded:random_fireworks"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/crossbow",
+  "weight": 1
+}

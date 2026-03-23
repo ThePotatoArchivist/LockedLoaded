@@ -1,4 +1,4 @@
-package archives.tater.lockedloaded.condition
+package archives.tater.lockedloaded.loot.condition
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.util.context.ContextKey

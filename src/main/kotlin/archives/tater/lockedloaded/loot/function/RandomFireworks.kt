@@ -1,4 +1,4 @@
-package archives.tater.lockedloaded.enchantment
+package archives.tater.lockedloaded.loot.function
 
 import archives.tater.lockedloaded.util.pick
 import com.mojang.serialization.Codec
@@ -22,12 +22,12 @@ import java.util.stream.IntStream
 import kotlin.jvm.optionals.getOrNull
 
 class RandomFireworks(
-    predicates: List<LootItemCondition>,
+    predicates: List<LootItemCondition> = listOf(),
     val shapes: List<FireworkExplosion.Shape> = ALL_SHAPES,
     val duration: Optional<IntProvider> = Optional.empty(),
     val explosions: IntProvider = ONE,
     val colors: IntProvider = ONE,
-    val fadeColors: IntProvider = ONE,
+    val fadeColors: IntProvider = ConstantInt.ZERO,
     val trailChance: Float = 0f,
     val twinkleChance: Float = 0f,
 ) : LootItemConditionalFunction(predicates) {
@@ -63,7 +63,7 @@ class RandomFireworks(
             IntProviders.POSITIVE_CODEC.optionalFieldOf("duration").forGetter(RandomFireworks::duration),
             IntProviders.POSITIVE_CODEC.optionalFieldOf("explosions", ONE).forGetter(RandomFireworks::explosions),
             IntProviders.POSITIVE_CODEC.optionalFieldOf("colors", ONE).forGetter(RandomFireworks::colors),
-            IntProviders.POSITIVE_CODEC.optionalFieldOf("fade_colors", ONE).forGetter(RandomFireworks::fadeColors),
+            IntProviders.NON_NEGATIVE_CODEC.optionalFieldOf("fade_colors", ConstantInt.ZERO).forGetter(RandomFireworks::fadeColors),
             Codec.floatRange(0f, 1f).optionalFieldOf("trail_chance", 0f).forGetter(RandomFireworks::trailChance),
             Codec.floatRange(0f, 1f).optionalFieldOf("twinkle_chance", 0f).forGetter(RandomFireworks::twinkleChance),
         )).apply(it, ::RandomFireworks) }

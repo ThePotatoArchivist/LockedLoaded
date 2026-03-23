@@ -1,7 +1,7 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
-import archives.tater.lockedloaded.condition.SingletonLootCondition
+import archives.tater.lockedloaded.loot.condition.SingletonLootCondition
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries

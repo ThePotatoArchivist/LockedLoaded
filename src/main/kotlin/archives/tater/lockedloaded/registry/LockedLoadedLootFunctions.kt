@@ -1,7 +1,7 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
-import archives.tater.lockedloaded.enchantment.RandomFireworks
+import archives.tater.lockedloaded.loot.function.RandomFireworks
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries

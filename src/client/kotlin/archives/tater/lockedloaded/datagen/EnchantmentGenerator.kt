@@ -3,15 +3,12 @@ package archives.tater.lockedloaded.datagen
 import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
 import archives.tater.lockedloaded.enchantment.LoadMultiple
 import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
-import archives.tater.lockedloaded.enchantment.RandomFireworks
+import archives.tater.lockedloaded.loot.function.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.McUnit
 import net.minecraft.advancements.criterion.CollectionPredicate
-import net.minecraft.advancements.criterion.DataComponentMatchers.Builder.components
-import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.advancements.criterion.MinMaxBounds.Ints
-import net.minecraft.core.Holder
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.predicates.DataComponentPredicates
 import net.minecraft.core.component.predicates.FireworksPredicate
@@ -20,7 +17,9 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
+import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.item.component.FireworkExplosion.Shape
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.*
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
@@ -28,7 +27,8 @@ import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.item.enchantment.effects.SetValue
-import net.minecraft.world.level.storage.loot.predicates.MatchTool.toolMatches
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction
+import net.minecraft.world.level.storage.loot.functions.SequenceFunction
 import java.util.*
 
 object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
@@ -107,6 +107,22 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(EnchantmentEffectComponents.PROJECTILE_PIERCING, AddValue(LevelBasedValue.perLevel(1f)))
         }
 
+        fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): LootItemFunction = FilteredFunction(
+            ItemPredicate {
+                withComponents {
+                    partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
+                        Optional.of(CollectionPredicate(
+                            Optional.empty(),
+                            Optional.empty(),
+                            Optional.of(Ints.exactly(0))
+                        )),
+                        duration
+                    ))
+                }
+            },
+            onPass = fireworks
+        )
+
         register(LockedLoadedEnchantments.ROCKETRY, definition(
             crossbowEnchantable,
             1,
@@ -116,24 +132,11 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
-            withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, Holder.direct(
-                RandomFireworks(
-                    predicates = listOf(
-                        toolMatches(ItemPredicate.Builder().apply { // TODO this won't work
-                            withComponents(components().apply {
-                                partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
-                                    Optional.of(CollectionPredicate(
-                                        Optional.empty(),
-                                        Optional.empty(),
-                                        Optional.of(Ints.exactly(0))
-                                    )),
-                                    Ints.ANY
-                                ))
-                            }.build())
-                        }).build()
-                    ),
-                )
-            ))
+            withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of(listOf(
+                fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL), explosions = ConstantInt(1)), Ints.atMost(1)),
+                fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER), explosions = ConstantInt(2)), Ints.exactly(2)),
+                fireworksModifier(RandomFireworks(explosions = ConstantInt(3)), Ints.atLeast(3)),
+            )))
         }
 
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(

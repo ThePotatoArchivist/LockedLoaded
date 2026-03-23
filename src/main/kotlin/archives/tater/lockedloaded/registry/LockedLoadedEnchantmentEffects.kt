@@ -86,7 +86,7 @@ object LockedLoadedEnchantmentEffects {
 
     @JvmField
     val MODIFY_PROJECTILE_ITEM = register("modify_projectile_item", validatedListCodec(
-        ConditionalEffect.codec(LootItemFunctions.CODEC),
+        ConditionalEffect.codec(LootItemFunctions.TYPED_CODEC),
         LootContextParamSets.ENCHANTED_ITEM
     ))
 
