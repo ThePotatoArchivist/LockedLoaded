@@ -27,7 +27,7 @@ object LockedLoadedEnchantments {
     @JvmField val MULTICHAMBERED_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/multichambered"))
     @JvmField val PUMP_CHARGE_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/pump_charge"))
 
-    fun init() {
+    internal fun init() {
         EnchantmentEvents.MODIFY.register { key, builder, source ->
             if (source.isBuiltin && key == Enchantments.PIERCING) builder.apply {
                 withEffect(PROJECTILE_PIERCE_DEFLECTION, setOf(

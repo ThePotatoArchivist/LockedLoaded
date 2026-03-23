@@ -41,7 +41,7 @@ object LockedLoadedAttachments {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
-    fun init() {
+    internal fun init() {
 
     }
 }

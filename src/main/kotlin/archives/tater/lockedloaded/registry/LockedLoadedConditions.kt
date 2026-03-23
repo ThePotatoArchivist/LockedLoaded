@@ -9,19 +9,17 @@ import net.minecraft.util.context.ContextKey
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
 
-object LockedLoadedConditions {
-    private fun <T: LootItemCondition> register(path: String, codec: MapCodec<T>): MapCodec<T> =
-        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, LockedLoaded.id(path), codec)
+private fun <T: LootItemCondition> register(path: String, codec: MapCodec<T>): MapCodec<T> =
+    Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, LockedLoaded.id(path), codec)
 
-    private fun register(path: String, condition: SingletonLootCondition) = condition.apply {
-        register(path, codec)
-    }
+private fun register(path: String, condition: SingletonLootCondition) = condition.apply {
+    register(path, codec)
+}
 
-    private fun register(path: String, vararg keys: ContextKey<*>, test: (LootContext) -> Boolean) =
-        register(path, SingletonLootCondition(*keys, test = test))
-
+private fun register(path: String, vararg keys: ContextKey<*>, test: (LootContext) -> Boolean) =
+    register(path, SingletonLootCondition(*keys, test = test))
 
 
-    fun init() {
-    }
+internal fun initLootConditions() {
+
 }

@@ -30,7 +30,7 @@ object LockedLoadedComponents {
     @JvmField
     val SPIN_CROSSBOW_USAGE = UseEffects(true, false, 1f)
 
-    fun init() {
+    internal fun init() {
 
     }
 }

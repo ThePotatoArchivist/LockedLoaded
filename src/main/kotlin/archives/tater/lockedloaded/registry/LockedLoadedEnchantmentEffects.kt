@@ -93,5 +93,5 @@ object LockedLoadedEnchantmentEffects {
     @JvmField
     val CROSSBOW_SPIN = register("crossbow_spin", LevelBasedValue.CODEC)
 
-    fun init() {}
+    internal fun init() {}
 }

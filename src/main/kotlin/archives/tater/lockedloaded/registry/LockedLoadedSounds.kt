@@ -14,5 +14,5 @@ object LockedLoadedSounds {
     @JvmField val SPIN = register("item.crossbow.spin")
     @JvmField val RICOCHET = register("entity.arrow.ricochet")
 
-    fun init() {}
+    internal fun init() {}
 }
