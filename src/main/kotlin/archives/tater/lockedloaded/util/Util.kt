@@ -44,10 +44,12 @@ fun <T, C : Collection<T>> Codec<List<T>>.collection(constructor: (List<T>) -> C
 )
 
 fun getDirection(entity: Entity, position: Vec3): Direction {
-    val center = entity.position().add(0.0, entity.bbHeight / 2.0, 0.0)
+    val center = entity.centerPos
     val normalizedOffset = (position - center).multiply(1.0 / entity.bbWidth, 1.0 / entity.bbHeight, 1.0 / entity.bbWidth)
     return Direction.getApproximateNearest(normalizedOffset)
 }
+
+val Entity.centerPos: Vec3 get() = position().add(0.0, bbHeight / 2.0, 0.0)
 
 fun <T> pick(items: List<T>, random: RandomSource): T =
     items[random.nextInt(items.size)]

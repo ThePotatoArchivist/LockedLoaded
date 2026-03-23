@@ -9,6 +9,8 @@
     "enchantmenteffect.cooldown.CrossbowItemMixin",
     "enchantmenteffect.defaultprojectile.EntityGetProjectileMixin",
     "enchantmenteffect.firedcount.CrossbowItemMixin",
+    "enchantmenteffect.fireworkknockback.CrossbowItemMixin",
+    "enchantmenteffect.fireworkknockback.FireworkRocketEntityMixin",
     "enchantmenteffect.ignoreowner.AbstractArrowMixin",
     "enchantmenteffect.loadmultiple.CrossbowItemMixin",
     "enchantmenteffect.loadmultiple.ItemMixin",

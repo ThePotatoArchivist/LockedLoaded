@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import com.mojang.serialization.Codec
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.util.ExtraCodecs
 
 object LockedLoadedAttachments {
     private fun <T: Any> register(path: String, init: AttachmentRegistry.Builder<T>.() -> Unit = {}): AttachmentType<T> =
@@ -39,6 +40,21 @@ object LockedLoadedAttachments {
     @JvmField
     val SPINNING_ITEM = register<McUnit>("spinning_item") {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
+    }
+
+    @JvmField
+    val FIREWORK_KNOCKBACK = register<Float>("firework_knockback") {
+        persistent(ExtraCodecs.NON_NEGATIVE_FLOAT)
+    }
+
+    @JvmField
+    val FIREWORK_KNOCKBACK_NO_DRAG = register<McUnit>("firework_knockback_no_drag") {
+        persistent(McUnit.CODEC)
+    }
+
+    @JvmField
+    val NO_DRAG = register<McUnit>("no_drag") {
+        persistent(McUnit.CODEC)
     }
 
     internal fun init() {

@@ -24,6 +24,14 @@
         ]
       }
     },
+    "lockedloaded:firework_knockback": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": 4.0
+        }
+      }
+    ],
     "lockedloaded:modify_projectile_item": [
       {
         "effect": {

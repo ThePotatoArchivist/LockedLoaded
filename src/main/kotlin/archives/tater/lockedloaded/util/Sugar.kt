@@ -43,6 +43,7 @@ infix fun <T: Any> TypedInstance<T>.isIn(tag: TagKey<T>) = `is`(tag)
 operator fun Vec3.plus(other: Vec3): Vec3 = add(other)
 operator fun Vec3.minus(other: Vec3): Vec3 = subtract(other)
 operator fun Vec3.times(scale: Double): Vec3 = scale(scale)
+operator fun Vec3.div(scale: Double): Vec3 = scale(1 / scale)
 operator fun Vec3.unaryMinus(): Vec3 = reverse()
 operator fun Vec3.times(other: Vec3) = dot(other)
 
