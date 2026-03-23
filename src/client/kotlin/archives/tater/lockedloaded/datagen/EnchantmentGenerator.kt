@@ -1,9 +1,6 @@
 package archives.tater.lockedloaded.datagen
 
-import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
-import archives.tater.lockedloaded.enchantment.LoadMultiple
-import archives.tater.lockedloaded.enchantment.PreviewedLootTable
-import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
+import archives.tater.lockedloaded.enchantment.*
 import archives.tater.lockedloaded.loot.function.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
@@ -137,6 +134,13 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
+            withSpecialEffect(LockedLoadedEnchantmentEffects.SUPPORTED_PROJECTILES, SupportedItems(
+                ItemPredicate {
+                    of(items, Items.FIREWORK_ROCKET)
+                },
+                replace = true
+            ))
+
             withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of(listOf(
                 fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL), explosions = ConstantInt(1)), Ints.atMost(1)),
                 fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER), explosions = ConstantInt(2)), Ints.exactly(2)),

@@ -94,7 +94,13 @@
           ]
         }
       }
-    ]
+    ],
+    "lockedloaded:supported_projectiles": {
+      "predicate": {
+        "items": "minecraft:firework_rocket"
+      },
+      "replace": true
+    }
   },
   "max_cost": {
     "base": 50,

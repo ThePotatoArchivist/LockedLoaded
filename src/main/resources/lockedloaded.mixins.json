@@ -24,6 +24,8 @@
     "enchantmenteffect.ricochet.AbstractArrowMixin",
     "enchantmenteffect.spin.CrossbowItemMixin",
     "enchantmenteffect.spin.LivingEntityMixin",
+    "enchantmenteffect.supportedprojectiles.EntityGetProjectileMixin",
+    "enchantmenteffect.supportedprojectiles.PlayerMixin",
     "enchantmenteffect.uncertainty.ProjectileWeaponItemMixin",
     "enchantmenteffect.velocity.ProjectileWeaponItemMixin"
   ],

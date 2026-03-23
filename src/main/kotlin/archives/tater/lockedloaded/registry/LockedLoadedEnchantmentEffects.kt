@@ -91,6 +91,12 @@ object LockedLoadedEnchantmentEffects {
     val DEFAULT_PROJECTILE_ITEM = register("default_projectile_item", PreviewedLootTable.codec(LootContextParamSets.ENCHANTED_ENTITY))
 
     @JvmField
+    val SUPPORTED_PROJECTILES = register("supported_projectiles", SupportedItems.SHORT_CODEC)
+
+    @JvmField
+    val SUPPORTED_HELD_PROJECTILES = register("supported_held_projectiles", SupportedItems.SHORT_CODEC)
+
+    @JvmField
     val CROSSBOW_SPIN = register("crossbow_spin", LevelBasedValue.CODEC)
 
     internal fun init() {}
