@@ -2,11 +2,12 @@ package archives.tater.lockedloaded.datagen
 
 import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
 import archives.tater.lockedloaded.enchantment.LoadMultiple
+import archives.tater.lockedloaded.enchantment.PreviewedLootTable
 import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
 import archives.tater.lockedloaded.loot.function.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
-import archives.tater.lockedloaded.util.McUnit
+import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.criterion.CollectionPredicate
 import net.minecraft.advancements.criterion.MinMaxBounds.Ints
 import net.minecraft.core.RegistrySetBuilder
@@ -19,6 +20,8 @@ import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.FireworkExplosion.Shape
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.*
@@ -27,8 +30,10 @@ import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.item.enchantment.effects.SetValue
+import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.level.storage.loot.functions.SequenceFunction
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import java.util.*
 
 object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
@@ -107,7 +112,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(EnchantmentEffectComponents.PROJECTILE_PIERCING, AddValue(LevelBasedValue.perLevel(1f)))
         }
 
-        fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): LootItemFunction = FilteredFunction(
+        fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): LootItemFunction = filteredFunction(
             ItemPredicate {
                 withComponents {
                     partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
@@ -137,6 +142,16 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER), explosions = ConstantInt(2)), Ints.exactly(2)),
                 fireworksModifier(RandomFireworks(explosions = ConstantInt(3)), Ints.atLeast(3)),
             )))
+
+            withSpecialEffect(LockedLoadedEnchantmentEffects.DEFAULT_PROJECTILE_ITEM, PreviewedLootTable(
+                LootTable {
+                    setParamSet(LootContextParamSets.ENCHANTED_ENTITY)
+                    pool {
+                        add(LootItem.lootTableItem(Items.FIREWORK_ROCKET))
+                    }
+                },
+                ItemStackTemplate(Items.FIREWORK_ROCKET)
+            ))
         }
 
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(

@@ -11,6 +11,7 @@ object LockedLoaded : ModInitializer {
 
 	fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
 
+	@JvmField
     val logger: Logger = LogManager.getLogger(MOD_ID)
 
 	override fun onInitialize() {

@@ -4,6 +4,26 @@
     "translate": "enchantment.lockedloaded.rocketry"
   },
   "effects": {
+    "lockedloaded:default_projectile_item": {
+      "preview": {
+        "id": "minecraft:firework_rocket"
+      },
+      "table": {
+        "type": "minecraft:enchanted_entity",
+        "pools": [
+          {
+            "bonus_rolls": 0.0,
+            "entries": [
+              {
+                "type": "minecraft:item",
+                "name": "minecraft:firework_rocket"
+              }
+            ],
+            "rolls": 1.0
+          }
+        ]
+      }
+    },
     "lockedloaded:modify_projectile_item": [
       {
         "effect": {

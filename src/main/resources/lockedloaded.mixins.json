@@ -3,9 +3,11 @@
   "package": "archives.tater.lockedloaded.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "CrossbowItemMixin",
     "ProjectileWeaponItemMixin",
     "ThrownTridentMixin",
     "enchantmenteffect.cooldown.CrossbowItemMixin",
+    "enchantmenteffect.defaultprojectile.EntityGetProjectileMixin",
     "enchantmenteffect.firedcount.CrossbowItemMixin",
     "enchantmenteffect.ignoreowner.AbstractArrowMixin",
     "enchantmenteffect.loadmultiple.CrossbowItemMixin",

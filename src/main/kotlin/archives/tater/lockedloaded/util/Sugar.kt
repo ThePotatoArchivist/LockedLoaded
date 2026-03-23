@@ -5,7 +5,9 @@ package archives.tater.lockedloaded.util
 import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import com.mojang.serialization.Codec
+import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderSet
 import net.minecraft.core.TypedInstance
@@ -24,6 +26,10 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.level.storage.loot.LootContext
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.functions.FilteredFunction
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.phys.Vec3
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -41,6 +47,30 @@ operator fun Vec3.unaryMinus(): Vec3 = reverse()
 operator fun Vec3.times(other: Vec3) = dot(other)
 
 fun EntityPredicate(init: EntityPredicate.Builder.() -> Unit): EntityPredicate = EntityPredicate.Builder.entity().apply(init).build()
+
+fun ItemPredicate(init: ItemPredicate.Builder.() -> Unit): ItemPredicate = ItemPredicate.Builder.item().apply(init).build()
+fun itemPredicateBuilder(init: ItemPredicate.Builder.() -> Unit): ItemPredicate.Builder = ItemPredicate.Builder.item().apply(init)
+
+fun ItemPredicate.Builder.withComponents(init: DataComponentMatchers.Builder.() -> Unit) {
+    withComponents(DataComponentMatchers.Builder.components().apply(init).build())
+}
+
+fun DataComponentMatchers.Builder.hasAny(type: DataComponentType<*>) {
+    any<DataComponentType<*>>(type)
+}
+
+fun filteredFunction(filter: ItemPredicate, onPass: LootItemFunction? = null, onFail: LootItemFunction? = null): LootItemFunction =
+    FilteredFunction.filtered(filter).apply {
+        onPass(Optional.ofNullable(onPass))
+        onFail(Optional.ofNullable(onFail))
+    }.build()
+
+fun LootTable(init: LootTable.Builder.() -> Unit): LootTable =
+    LootTable.lootTable().apply(init).build()
+
+fun LootTable.Builder.pool(init: LootPool.Builder.() -> Unit) {
+    pool(LootPool.lootPool().apply(init).build())
+}
 
 operator fun <T: Any> LootContext.get(key: ContextKey<T>): T = getParameter(key)
 

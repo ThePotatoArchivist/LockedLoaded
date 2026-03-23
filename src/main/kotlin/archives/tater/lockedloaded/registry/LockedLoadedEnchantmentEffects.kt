@@ -1,10 +1,7 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
-import archives.tater.lockedloaded.enchantment.ChargedProjectileIndicator
-import archives.tater.lockedloaded.enchantment.LoadMultiple
-import archives.tater.lockedloaded.enchantment.PierceDeflection
-import archives.tater.lockedloaded.enchantment.ProjectileUncertainty
+import archives.tater.lockedloaded.enchantment.*
 import archives.tater.lockedloaded.util.McUnit
 import archives.tater.lockedloaded.util.validatedListCodec
 import com.mojang.serialization.Codec
@@ -89,6 +86,9 @@ object LockedLoadedEnchantmentEffects {
         ConditionalEffect.codec(LootItemFunctions.TYPED_CODEC),
         LootContextParamSets.ENCHANTED_ITEM
     ))
+
+    @JvmField
+    val DEFAULT_PROJECTILE_ITEM = register("default_projectile_item", PreviewedLootTable.codec(LootContextParamSets.ENCHANTED_ENTITY))
 
     @JvmField
     val CROSSBOW_SPIN = register("crossbow_spin", LevelBasedValue.CODEC)

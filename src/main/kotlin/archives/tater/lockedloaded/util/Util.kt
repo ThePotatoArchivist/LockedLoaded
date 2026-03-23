@@ -3,14 +3,20 @@
 package archives.tater.lockedloaded.util
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.util.RandomSource
 import net.minecraft.util.context.ContextKeySet
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.storage.loot.LootContext
+import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.Validatable
 import net.minecraft.world.phys.Vec3
+import java.util.function.Function
+
 
 inline fun <T: Any, U: Any> getFirstEnchantmentComponent(stack: ItemStack, type: DataComponentType<T>, combine: (T, Int) -> U): U? {
     if (stack.isEmpty) return null
@@ -25,6 +31,13 @@ inline fun <T: Any, U: Any> getFirstEnchantmentComponent(stack: ItemStack, type:
 fun <T : Validatable> validatedListCodec(elementCodec: Codec<T>, paramSet: ContextKeySet): Codec<List<T>> =
     elementCodec.listOf().validate(Validatable.listValidatorForContext<T>(paramSet))
 
+fun <T: Validatable> holderValidatorForContext(paramSet: ContextKeySet): Function<Holder<T>, DataResult<Holder<T>>> {
+    val validator = Validatable.validatorForContext<T>(paramSet)
+    return { holder ->
+        validator.apply(holder.value()).map { holder }
+    }
+}
+
 fun <T, C : Collection<T>> Codec<List<T>>.collection(constructor: (List<T>) -> C): Codec<C> = xmap(
     constructor,
     Collection<T>::toList
@@ -38,3 +51,17 @@ fun getDirection(entity: Entity, position: Vec3): Direction {
 
 fun <T> pick(items: List<T>, random: RandomSource): T =
     items[random.nextInt(items.size)]
+
+@JvmOverloads
+fun getOneStack(table: LootTable, context: LootContext, onProblem: Runnable? = null): ItemStack {
+    val stacks = mutableListOf<ItemStack>()
+    table.getRandomItems(context, stacks::add)
+    return when (stacks.size) {
+        0 -> ItemStack.EMPTY
+        1 -> stacks.first()
+        else -> {
+            onProblem?.run()
+            stacks.first()
+        }
+    }
+}
