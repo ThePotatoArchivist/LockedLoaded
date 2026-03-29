@@ -170,6 +170,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             EquipmentSlotGroup.HAND
         )) {
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_PERSIST, McUnit.INSTANCE)
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_OWNER_PICKUP, McUnit.INSTANCE)
         }
 
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(

@@ -62,6 +62,11 @@ object LockedLoadedAttachments {
         persistent(McUnit.CODEC)
     }
 
+    @JvmField
+    val PROJECTILE_OWNER_PICKUP = register<McUnit>("projectile_owner_pickup") {
+        persistent(McUnit.CODEC)
+    }
+
     internal fun init() {
 
     }
