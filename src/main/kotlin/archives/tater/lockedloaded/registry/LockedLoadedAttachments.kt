@@ -52,6 +52,16 @@ object LockedLoadedAttachments {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
+    @JvmField
+    val PROJECTILE_PERSISTENT = register<McUnit>("projectile_persistent") {
+        persistent(McUnit.CODEC)
+    }
+
+    @JvmField
+    val PROJECTILE_DEALT_DAMAGE = register<McUnit>("projectile_dealt_damage") {
+        persistent(McUnit.CODEC)
+    }
+
     internal fun init() {
 
     }

@@ -21,6 +21,7 @@ object LockedLoadedEnchantments {
     @JvmField val MAGAZINE = of("magazine")
     @JvmField val SHARPSHOOTING = of("sharpshooting")
     @JvmField val ROCKETRY = of("rocketry")
+    @JvmField val RECOVERY = of("recovery")
     @JvmField val TWIRLING_CURSE = of("twirling_curse")
 
     @JvmField val MAGAZINE_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/magazine"))

@@ -103,6 +103,12 @@ object LockedLoadedEnchantmentEffects {
     ))
 
     @JvmField
+    val PROJECTILE_PERSIST = register("projectile_persist", validatedListCodec(
+        ConditionalEffect.codec(McUnit.CODEC),
+        LootContextParamSets.ENCHANTED_ITEM
+    ))
+
+    @JvmField
     val CROSSBOW_SPIN = register("crossbow_spin", LevelBasedValue.CODEC)
 
     internal fun init() {}

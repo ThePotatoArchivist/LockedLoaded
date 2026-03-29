@@ -160,6 +160,18 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, AddValue(LevelBasedValue.constant(4f)))
         }
 
+        register(LockedLoadedEnchantments.RECOVERY, definition(
+            crossbowEnchantable,
+            4,
+            1,
+            constantCost(10),
+            constantCost(50),
+            1,
+            EquipmentSlotGroup.HAND
+        )) {
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_PERSIST, McUnit.INSTANCE)
+        }
+
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(
             crossbowEnchantable,
             1,
