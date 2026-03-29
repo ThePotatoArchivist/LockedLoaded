@@ -11,6 +11,7 @@
     "enchantmenteffect.firedcount.CrossbowItemMixin",
     "enchantmenteffect.fireworkknockback.CrossbowItemMixin",
     "enchantmenteffect.fireworkknockback.FireworkRocketEntityMixin",
+    "enchantmenteffect.fireworkknockback.LivingEntityMixin",
     "enchantmenteffect.ignoreowner.AbstractArrowMixin",
     "enchantmenteffect.loadmultiple.CrossbowItemMixin",
     "enchantmenteffect.loadmultiple.ItemMixin",

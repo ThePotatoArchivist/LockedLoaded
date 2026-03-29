@@ -26,8 +26,10 @@ public abstract class FireworkRocketEntityMixin extends Projectile {
             at = @At(value = "INVOKE:LAST", target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z")
     )
     private boolean fireworkKnockback(LivingEntity instance, ServerLevel level, DamageSource source, float amount, Operation<Boolean> original) {
+        var result = original.call(instance, level, source, amount);
+
         FireworkKnockbackKt.applyFireworkKnockback((FireworkRocketEntity) (Object) this, instance, 5.0);
 
-        return original.call(instance, level, source, amount);
+        return result;
     }
 }

@@ -48,13 +48,8 @@ object LockedLoadedAttachments {
     }
 
     @JvmField
-    val FIREWORK_KNOCKBACK_NO_DRAG = register<McUnit>("firework_knockback_no_drag") {
-        persistent(McUnit.CODEC)
-    }
-
-    @JvmField
-    val NO_DRAG = register<McUnit>("no_drag") {
-        persistent(McUnit.CODEC)
+    val DISCARD_FRICTION_CURRENT_IMPULSE = register<McUnit>("discard_friction_current_impulse") {
+        syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
     internal fun init() {
