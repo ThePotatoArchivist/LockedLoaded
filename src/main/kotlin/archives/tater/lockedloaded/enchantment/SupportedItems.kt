@@ -28,6 +28,7 @@ data class SupportedItems(
 
         @JvmStatic
         fun getSupportedItems(weapon: ItemStack, type: DataComponentType<SupportedItems>, original: Predicate<ItemStack>): Predicate<ItemStack> = Util.allOf(buildList {
+            add(original)
             EnchantmentHelper.runIterationOnItem(weapon) { enchantment, _ ->
                 val effect = enchantment.value().effects()[type] ?: return@runIterationOnItem
                 if (effect.replace)
