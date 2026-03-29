@@ -24,12 +24,12 @@ public class CrossbowItemMixin {
             at = @At(value = "NEW", target = "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;DDDZ)Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;")
     )
     private FireworkRocketEntity setFireworkKnockback(FireworkRocketEntity original, Level level, LivingEntity shooter, ItemStack heldItem, ItemStack projectile, boolean isCrit) {
-        if (!(level instanceof ServerLevel serverLevel) || !EnchantmentHelper.has(heldItem, LockedLoadedEnchantmentEffects.FIREWORK_KNOCKBACK)) return original;
+        if (!(level instanceof ServerLevel serverLevel) || !EnchantmentHelper.has(heldItem, LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK)) return original;
         var knockback = new MutableFloat();
         EnchantmentHelper.runIterationOnItem(heldItem, (enchantment, enchantmentLevel) ->
-                enchantment.value().modifyItemFilteredCount(LockedLoadedEnchantmentEffects.FIREWORK_KNOCKBACK, serverLevel, enchantmentLevel, heldItem, knockback)
+                enchantment.value().modifyItemFilteredCount(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, serverLevel, enchantmentLevel, heldItem, knockback)
         );
-        original.setAttached(LockedLoadedAttachments.FIREWORK_KNOCKBACK, knockback.floatValue());
+        original.setAttached(LockedLoadedAttachments.FIREWORK_OWNER_KNOCKBACK, knockback.floatValue());
         return original;
     }
 }

@@ -157,7 +157,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 ItemStackTemplate(Items.FIREWORK_ROCKET)
             ))
 
-            withEffect(LockedLoadedEnchantmentEffects.FIREWORK_KNOCKBACK, AddValue(LevelBasedValue.constant(4f)))
+            withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, AddValue(LevelBasedValue.constant(4f)))
         }
 
         register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(

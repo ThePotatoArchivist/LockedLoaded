@@ -43,7 +43,7 @@ object LockedLoadedAttachments {
     }
 
     @JvmField
-    val FIREWORK_KNOCKBACK = register<Float>("firework_knockback") {
+    val FIREWORK_OWNER_KNOCKBACK = register<Float>("firework_owner_knockback") {
         persistent(ExtraCodecs.NON_NEGATIVE_FLOAT)
     }
 

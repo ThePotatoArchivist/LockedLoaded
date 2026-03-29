@@ -24,7 +24,7 @@
         ]
       }
     },
-    "lockedloaded:firework_knockback": [
+    "lockedloaded:firework_owner_knockback": [
       {
         "effect": {
           "type": "minecraft:add",

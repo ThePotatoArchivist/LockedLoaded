@@ -97,7 +97,7 @@ object LockedLoadedEnchantmentEffects {
     val SUPPORTED_HELD_PROJECTILES = register("supported_held_projectiles", SupportedItems.SHORT_CODEC)
 
     @JvmField
-    val FIREWORK_KNOCKBACK = register("firework_knockback", validatedListCodec(
+    val FIREWORK_OWNER_KNOCKBACK = register("firework_owner_knockback", validatedListCodec(
         ConditionalEffect.codec(EnchantmentValueEffect.CODEC),
         LootContextParamSets.ENCHANTED_ITEM
     ))
