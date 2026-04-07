@@ -13,6 +13,7 @@
     "enchantmenteffect.spin.HumanoidModelMixin",
     "enchantmenteffect.spin.ItemInHandLayerMixin",
     "enchantmenteffect.spin.ItemInHandRendererMixin",
-    "enchantmenteffect.spin.LocalPlayerMixin"
+    "enchantmenteffect.spin.LocalPlayerMixin",
+    "rocketride.HumanoidMobRendererMixin"
   ]
 }
