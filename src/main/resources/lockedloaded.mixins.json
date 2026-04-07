@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "CrossbowItemMixin",
+    "LootContextParamSetsAccessor",
     "ProjectileWeaponItemMixin",
     "ThrownTridentMixin",
     "enchantmenteffect.cooldown.CrossbowItemMixin",
@@ -26,6 +27,7 @@
     "enchantmenteffect.piercedeflection.LivingEntityMixin",
     "enchantmenteffect.piercedeflection.ShulkerMixin",
     "enchantmenteffect.piercedeflection.WitherMixin",
+    "enchantmenteffect.projectilemount.ProjectileWeaponItemMixin",
     "enchantmenteffect.ricochet.AbstractArrowMixin",
     "enchantmenteffect.spin.CrossbowItemMixin",
     "enchantmenteffect.spin.LivingEntityMixin",

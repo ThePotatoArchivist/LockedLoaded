@@ -4,9 +4,11 @@ package archives.tater.lockedloaded.util
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
+import net.minecraft.advancements.criterion.MinMaxBounds.FloatDegrees
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource
 import net.minecraft.util.context.ContextKeySet
 import net.minecraft.world.entity.Entity
@@ -66,4 +68,14 @@ fun getOneStack(table: LootTable, context: LootContext, onProblem: Runnable? = n
             stacks.first()
         }
     }
+}
+
+/**
+ * @see net.minecraft.commands.arguments.selector.EntitySelectorParser.createRotationPredicate
+ */
+fun FloatDegrees.matches(degrees: Float): Boolean {
+    val min = Mth.wrapDegrees(min().orElse(0f))
+    val max = Mth.wrapDegrees(max().orElse(359f))
+    val rotation: Float = Mth.wrapDegrees(degrees)
+    return if (min > max) rotation >= min || rotation <= max else rotation in min..max
 }

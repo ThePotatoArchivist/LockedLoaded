@@ -22,6 +22,7 @@ object LockedLoaded : ModInitializer {
 		LockedLoadedEnchantments.init()
 		LockedLoadedAttachments.init()
 		LockedLoadedComponents.init()
+		LockedLoadedLootContext.init()
 		initLootFunctions()
 		initLootConditions()
 		LockedLoadedSounds.init()

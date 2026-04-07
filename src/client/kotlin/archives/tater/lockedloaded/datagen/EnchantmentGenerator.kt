@@ -1,11 +1,16 @@
 package archives.tater.lockedloaded.datagen
 
 import archives.tater.lockedloaded.enchantment.*
+import archives.tater.lockedloaded.loot.condition.EntityLookingCondition
 import archives.tater.lockedloaded.loot.function.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.criterion.CollectionPredicate
+import net.minecraft.advancements.criterion.EntityFlagsPredicate.Builder.flags
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.MinMaxBounds.Doubles.atMost
+import net.minecraft.advancements.criterion.MinMaxBounds.FloatDegrees
 import net.minecraft.advancements.criterion.MinMaxBounds.Ints
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.predicates.DataComponentPredicates
@@ -16,6 +21,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
@@ -27,15 +33,19 @@ import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.item.enchantment.effects.SetValue
+import net.minecraft.world.level.storage.loot.LootContext.EntityTarget
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.level.storage.loot.functions.SequenceFunction
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition.allOf
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
 import java.util.*
 
 object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
     override fun run(registry: BootstrapContext<Enchantment>) {
         val items = registry.lookup(Registries.ITEM)
+        val entities = registry.lookup(Registries.ENTITY_TYPE)
         val enchantments = registry.lookup(Registries.ENCHANTMENT)
         val crossbowEnchantable = items.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE)
 
@@ -158,6 +168,23 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             ))
 
             withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, AddValue(LevelBasedValue.constant(4f)))
+
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNT, McUnit.INSTANCE, allOf(
+                LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate {
+                    of(entities, EntityType.FIREWORK_ROCKET)
+                }),
+                LootItemEntityPropertyCondition.hasProperties(EntityTarget.TARGET_ENTITY, EntityPredicate {
+                    moving(MovementPredicate(
+                        y = atMost(0.0),
+                    ))
+                    flags(flags().apply {
+                        setOnGround(false)
+                        setIsInWater(false)
+                        setIsFallFlying(false)
+                    })
+                }),
+                EntityLookingCondition(EntityTarget.TARGET_ENTITY, xRot = FloatDegrees(MinMaxBounds.Bounds.atMost(-45f)))
+            ))
         }
 
         register(LockedLoadedEnchantments.RECOVERY, definition(

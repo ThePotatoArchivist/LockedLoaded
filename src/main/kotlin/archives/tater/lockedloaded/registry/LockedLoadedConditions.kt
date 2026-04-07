@@ -1,6 +1,7 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
+import archives.tater.lockedloaded.loot.condition.EntityLookingCondition
 import archives.tater.lockedloaded.loot.condition.SingletonLootCondition
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.Registry
@@ -21,5 +22,5 @@ private fun register(path: String, vararg keys: ContextKey<*>, test: (LootContex
 
 
 internal fun initLootConditions() {
-
+    register("entity_looking", EntityLookingCondition.CODEC)
 }

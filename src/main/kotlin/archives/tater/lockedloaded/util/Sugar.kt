@@ -8,6 +8,8 @@ import com.mojang.serialization.Codec
 import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.MovementPredicate
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderSet
 import net.minecraft.core.TypedInstance
@@ -48,6 +50,16 @@ operator fun Vec3.unaryMinus(): Vec3 = reverse()
 operator fun Vec3.times(other: Vec3) = dot(other)
 
 fun EntityPredicate(init: EntityPredicate.Builder.() -> Unit): EntityPredicate = EntityPredicate.Builder.entity().apply(init).build()
+
+fun MovementPredicate(
+    x: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    y: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    z: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    speed: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    horizontalSpeed: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    verticalSpeed: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+    fallDistance: MinMaxBounds.Doubles = MinMaxBounds.Doubles.ANY,
+) = MovementPredicate(x, y, z, speed, horizontalSpeed, verticalSpeed, fallDistance)
 
 fun ItemPredicate(init: ItemPredicate.Builder.() -> Unit): ItemPredicate = ItemPredicate.Builder.item().apply(init).build()
 fun itemPredicateBuilder(init: ItemPredicate.Builder.() -> Unit): ItemPredicate.Builder = ItemPredicate.Builder.item().apply(init)
