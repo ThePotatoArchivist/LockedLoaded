@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.Vec3;
 
 @Mixin(ProjectileWeaponItem.class)
 public class ProjectileWeaponItemMixin {
@@ -29,7 +30,7 @@ public class ProjectileWeaponItemMixin {
                     LockedLoadedLootContext.projectileContext(level, enchantmentLevel, original),
                     _ -> {
                         shooter.startRiding(original);
-                        original.setDeltaMovement(original.getDeltaMovement().multiply(1, 0, 1).normalize().scale(original.getDeltaMovement().length()));
+                        original.setDeltaMovement(Vec3.directionFromRotation(0, shooter.getYRot()).scale(original.getDeltaMovement().length()));
                     }
             );
         });

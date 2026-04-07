@@ -25,6 +25,7 @@ object LockedLoaded : ModInitializer {
 		LockedLoadedLootContext.init()
 		initLootFunctions()
 		initLootConditions()
+		initNetwork()
 		LockedLoadedSounds.init()
 	}
 }

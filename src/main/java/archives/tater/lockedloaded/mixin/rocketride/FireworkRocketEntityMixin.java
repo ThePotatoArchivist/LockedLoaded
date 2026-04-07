@@ -1,8 +1,12 @@
 package archives.tater.lockedloaded.mixin.rocketride;
 
+import archives.tater.lockedloaded.network.ServerboundRideFireworkPayload;
+
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,6 +23,15 @@ public abstract class FireworkRocketEntityMixin extends Entity {
     @Shadow
     private int life;
 
+    @Unique
+    private boolean rideInitialized = false;
+    @Unique
+    private double riddenSpeed = 0;
+    @Unique
+    private float riddenXRot = 0;
+    @Unique
+    private float riddenYRot = 0;
+
     public FireworkRocketEntityMixin(EntityType<?> type, Level level) {
         super(type, level);
     }
@@ -28,7 +41,7 @@ public abstract class FireworkRocketEntityMixin extends Entity {
             at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;life:I", opcode = Opcodes.PUTFIELD)
     )
     private boolean increaseLifeMounted(FireworkRocketEntity instance, int value) {
-        return life <= 0 || getPassengers().isEmpty() || tickCount % 2 == 0;
+        return life <= 0 || getPassengers().isEmpty() || tickCount % 3 == 0;
     }
 
     @Inject(
@@ -37,17 +50,24 @@ public abstract class FireworkRocketEntityMixin extends Entity {
     )
     private void controlRotation(CallbackInfo ci) {
         var controller = getControllingPassenger();
-        if (controller == null) return;
-        if (!canSimulateMovement()) {
-            setDeltaMovement(Vec3.ZERO);
-            return;
+        if (controller == null || !canSimulateMovement()) return;
+
+        if (!rideInitialized) {
+            riddenSpeed = getDeltaMovement().length();
+            riddenXRot = getDeltaMovement().rotation().x;
+            riddenYRot = getDeltaMovement().rotation().y;
+            rideInitialized = true;
         }
 
-        float strafe = controller.xxa;
-        float forward = controller.zza;
+        var strafe = controller.xxa;
+        var forward = controller.zza;
 
-        var movement = getDeltaMovement();
-        var rotation = movement.rotation();
-        setDeltaMovement(Vec3.directionFromRotation(rotation.x + -5 * forward, rotation.y + -5 * strafe).scale(movement.length()));
+        if (strafe == 0 && forward == 0) return;
+
+        riddenXRot += -5 * forward;
+        riddenYRot += -5 * strafe;
+        var movement = Vec3.directionFromRotation(riddenXRot, riddenYRot).scale(riddenSpeed);
+        setDeltaMovement(movement);
+        if (level().isClientSide()) ClientPlayNetworking.send(new ServerboundRideFireworkPayload(movement));
     }
 }

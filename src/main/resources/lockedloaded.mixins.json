@@ -36,7 +36,8 @@
     "enchantmenteffect.uncertainty.ProjectileWeaponItemMixin",
     "enchantmenteffect.velocity.ProjectileWeaponItemMixin",
     "rocketride.EntityMixin",
-    "rocketride.FireworkRocketEntityMixin"
+    "rocketride.FireworkRocketEntityMixin",
+    "rocketride.ProjectileMixin"
   ],
   "injectors": {
     "defaultRequire": 1
