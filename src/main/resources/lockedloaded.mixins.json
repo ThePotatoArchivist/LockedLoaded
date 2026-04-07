@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "CrossbowItemMixin",
-    "FireworkRocketEntityMixin",
     "LootContextParamSetsAccessor",
     "ProjectileWeaponItemMixin",
     "ThrownTridentMixin",
@@ -35,7 +34,9 @@
     "enchantmenteffect.supportedprojectiles.EntityGetProjectileMixin",
     "enchantmenteffect.supportedprojectiles.PlayerMixin",
     "enchantmenteffect.uncertainty.ProjectileWeaponItemMixin",
-    "enchantmenteffect.velocity.ProjectileWeaponItemMixin"
+    "enchantmenteffect.velocity.ProjectileWeaponItemMixin",
+    "rocketride.EntityMixin",
+    "rocketride.FireworkRocketEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
