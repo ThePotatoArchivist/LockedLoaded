@@ -7,7 +7,7 @@ import net.minecraft.world.entity.projectile.FireworkRocketEntity
 import net.minecraft.world.phys.Vec3
 
 fun applyFireworkKnockback(firework: FireworkRocketEntity, entity: LivingEntity, radius: Double, oldMovement: Vec3) {
-    if (entity != firework.owner || entity.onGround()) return
+    if (entity != firework.owner || entity.onGround() || entity.isPassenger) return
     val knockback = firework.getAttachedOrElse(LockedLoadedAttachments.FIREWORK_OWNER_KNOCKBACK, 0f);
     if (knockback <= 0) return
 

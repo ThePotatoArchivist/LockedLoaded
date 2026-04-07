@@ -27,7 +27,10 @@ public class ProjectileWeaponItemMixin {
             Enchantment.applyEffects(
                     enchantment.value().getEffects(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNT),
                     LockedLoadedLootContext.projectileContext(level, enchantmentLevel, original),
-                    _ -> shooter.startRiding(original)
+                    _ -> {
+                        shooter.startRiding(original);
+                        original.setDeltaMovement(original.getDeltaMovement().multiply(1, 0, 1).normalize().scale(original.getDeltaMovement().length()));
+                    }
             );
         });
 
