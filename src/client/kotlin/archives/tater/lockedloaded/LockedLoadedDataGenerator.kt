@@ -20,6 +20,7 @@ object LockedLoadedDataGenerator : DataGeneratorEntrypoint {
 			addProvider(::EnchantmentTagGenerator)
 			addProvider(::DamageTagGenerator)
 			addProvider(::LangGenerator)
+			addProvider(::LootTableGenerator)
 		}
 	}
 }

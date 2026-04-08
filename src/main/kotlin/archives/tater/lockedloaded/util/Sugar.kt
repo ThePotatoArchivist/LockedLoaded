@@ -24,12 +24,17 @@ import net.minecraft.world.entity.EntityReference
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.level.chunk.EmptyLevelChunk
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.FilteredFunction
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.phys.Vec3
@@ -78,11 +83,22 @@ fun filteredFunction(filter: ItemPredicate, onPass: LootItemFunction? = null, on
         onFail(Optional.ofNullable(onFail))
     }.build()
 
+fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder =
+    LootTable.lootTable().apply(init)
+
 fun LootTable(init: LootTable.Builder.() -> Unit): LootTable =
-    LootTable.lootTable().apply(init).build()
+    lootTable(init).build()
 
 fun LootTable.Builder.pool(init: LootPool.Builder.() -> Unit) {
     pool(LootPool.lootPool().apply(init).build())
+}
+
+fun LootPool.Builder.item(item: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit = {}) {
+    add(LootItem.lootTableItem(item).apply(init))
+}
+
+fun LootPool.Builder.empty(weight: Int) {
+    add(EmptyLootItem.emptyItem().setWeight(weight))
 }
 
 operator fun <T: Any> LootContext.get(key: ContextKey<T>): T = getParameter(key)

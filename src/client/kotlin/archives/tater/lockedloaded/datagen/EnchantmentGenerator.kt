@@ -34,7 +34,6 @@ import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.item.enchantment.effects.SetValue
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget
-import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.level.storage.loot.functions.SequenceFunction
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
@@ -164,7 +163,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 LootTable {
                     setParamSet(LootContextParamSets.ENCHANTED_ENTITY)
                     pool {
-                        add(LootItem.lootTableItem(Items.FIREWORK_ROCKET))
+                        item(Items.FIREWORK_ROCKET)
                     }
                 },
                 ItemStackTemplate(Items.FIREWORK_ROCKET)
