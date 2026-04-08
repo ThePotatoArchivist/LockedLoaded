@@ -13,6 +13,7 @@ class LangGenerator(packOutput: FabricPackOutput, registryLookup: CompletableFut
         translationBuilder.addEnchantment(LockedLoadedEnchantments.MAGAZINE, "Magazine")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.SHARPSHOOTING, "Sharpshooting")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.ROCKETRY, "Rocketry")
+        translationBuilder.addEnchantment(LockedLoadedEnchantments.RECOVERY, "Recovery")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.TWIRLING_CURSE, "Curse of Twirling")
     }
 

@@ -1,5 +1,9 @@
 {
   "values": [
-    "lockedloaded:multichambered"
+    "lockedloaded:multichambered",
+    "lockedloaded:pump_charge",
+    "lockedloaded:sharpshooting",
+    "lockedloaded:rocketry",
+    "lockedloaded:recovery"
   ]
 }

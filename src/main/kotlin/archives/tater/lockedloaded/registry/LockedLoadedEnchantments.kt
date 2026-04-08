@@ -26,7 +26,6 @@ object LockedLoadedEnchantments {
 
     @JvmField val MAGAZINE_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/magazine"))
     @JvmField val MULTICHAMBERED_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/multichambered"))
-    @JvmField val PUMP_CHARGE_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/pump_charge"))
 
     internal fun init() {
         EnchantmentEvents.MODIFY.register { key, builder, source ->

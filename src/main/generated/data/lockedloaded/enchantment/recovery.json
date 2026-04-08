@@ -25,7 +25,7 @@
     "per_level_above_first": 0
   },
   "slots": [
-    "hand"
+    "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/crossbow",
   "weight": 4

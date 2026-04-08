@@ -48,6 +48,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
         val entities = registry.lookup(Registries.ENTITY_TYPE)
         val enchantments = registry.lookup(Registries.ENCHANTMENT)
         val crossbowEnchantable = items.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE)
+        val crossbowExclusive = enchantments.getOrThrow(EnchantmentTags.CROSSBOW_EXCLUSIVE)
 
         fun register(key: ResourceKey<Enchantment>, definition: EnchantmentDefinition, init: Enchantment.Builder.() -> Unit) =
             enchantment(definition).apply(init).build(key.identifier()).also {
@@ -78,7 +79,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
-            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantments.PUMP_CHARGE_EXCLUSIVE))
+            exclusiveWith(crossbowExclusive)
             withSpecialEffect(LockedLoadedEnchantmentEffects.LOAD_MULTIPLE, LoadMultiple(LevelBasedValue.constant(8f)))
             withSpecialEffect(LockedLoadedEnchantmentEffects.CHARGED_PROJECTILE_INDICATOR, ChargedProjectileIndicator(LevelBasedValue.constant(8f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_UNCERTAINTY, ProjectileUncertainty(projectileCount = AddValue(LevelBasedValue.perLevel(2f))))
@@ -90,7 +91,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             crossbowEnchantable,
             1,
             4,
-            dynamicCost(12, 20),
+            dynamicCost(20, 10),
             constantCost(50),
             8,
             EquipmentSlotGroup.MAINHAND
@@ -113,7 +114,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
-            exclusiveWith(enchantments.getOrThrow(EnchantmentTags.CROSSBOW_EXCLUSIVE))
+            exclusiveWith(crossbowExclusive)
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_RICOCHET, AddValue(LevelBasedValue.perLevel(1f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_IGNORE_OWNER, McUnit.INSTANCE)
             withEffect(EnchantmentEffectComponents.PROJECTILE_PIERCING, AddValue(LevelBasedValue.perLevel(1f)))
@@ -139,11 +140,13 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             crossbowEnchantable,
             1,
             1,
-            constantCost(20),
+            constantCost(30),
             constantCost(50),
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
+            exclusiveWith(crossbowExclusive)
+
             withSpecialEffect(LockedLoadedEnchantmentEffects.SUPPORTED_PROJECTILES, SupportedItems(
                 ItemPredicate {
                     of(items, Items.FIREWORK_ROCKET)
@@ -194,7 +197,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             constantCost(10),
             constantCost(50),
             1,
-            EquipmentSlotGroup.HAND
+            EquipmentSlotGroup.MAINHAND
         )) {
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_PERSIST, McUnit.INSTANCE)
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_OWNER_PICKUP, McUnit.INSTANCE)

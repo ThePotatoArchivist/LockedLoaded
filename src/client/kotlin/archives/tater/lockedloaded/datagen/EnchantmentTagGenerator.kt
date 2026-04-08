@@ -25,29 +25,32 @@ class EnchantmentTagGenerator(
     override fun addTags(registries: HolderLookup.Provider) {
         buildTag(EnchantmentTags.NON_TREASURE) {
             +LockedLoadedEnchantments.MULTICHAMBERED
+            +LockedLoadedEnchantments.PUMP_CHARGE
+            +LockedLoadedEnchantments.SHARPSHOOTING
+            +LockedLoadedEnchantments.ROCKETRY
+            +LockedLoadedEnchantments.RECOVERY
+        }
+        buildTag(EnchantmentTags.TREASURE) {
+            +LockedLoadedEnchantments.TWIRLING_CURSE
+        }
+        buildTag(EnchantmentTags.CURSE) {
+            +LockedLoadedEnchantments.TWIRLING_CURSE
         }
         buildTag(EnchantmentTags.CROSSBOW_EXCLUSIVE) {
             +LockedLoadedEnchantments.MAGAZINE
             +LockedLoadedEnchantments.SHARPSHOOTING
+            +LockedLoadedEnchantments.PUMP_CHARGE
+            +LockedLoadedEnchantments.ROCKETRY
         }
         buildTag(LockedLoadedEnchantments.MAGAZINE_EXCLUSIVE) {
             +EnchantmentTags.CROSSBOW_EXCLUSIVE
             +Enchantments.QUICK_CHARGE
-            +LockedLoadedEnchantments.PUMP_CHARGE
-            +LockedLoadedEnchantments.SHARPSHOOTING
             +LockedLoadedEnchantments.MULTICHAMBERED
         }
         buildTag(LockedLoadedEnchantments.MULTICHAMBERED_EXCLUSIVE) {
             +Enchantments.QUICK_CHARGE
             +Enchantments.MULTISHOT
             +LockedLoadedEnchantments.PUMP_CHARGE
-        }
-        buildTag(LockedLoadedEnchantments.PUMP_CHARGE_EXCLUSIVE) {
-            +Enchantments.PIERCING
-            +Enchantments.MULTISHOT
-        }
-        buildTag(EnchantmentTags.CURSE) {
-            +LockedLoadedEnchantments.TWIRLING_CURSE
         }
     }
 
