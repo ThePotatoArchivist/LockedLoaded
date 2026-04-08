@@ -12,17 +12,19 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable.lootTableR
 object LockedLoadedLoot {
     private fun of(path: String) = ResourceKey.create(Registries.LOOT_TABLE, LockedLoaded.id(path))
 
-    private fun injectOf(table: ResourceKey<LootTable>) = of("inject/${table.identifier().path}")
+    private val INJECTS = mutableMapOf<ResourceKey<LootTable>, ResourceKey<LootTable>>()
+
+    private fun injectOf(table: ResourceKey<LootTable>) = of("inject/${table.identifier().path}").also {
+        INJECTS[table] = it
+    }
 
     val PILLAGER_OUTPOST = injectOf(BuiltInLootTables.PILLAGER_OUTPOST)
     val TRIAL_CHAMBERS_REWARD_RARE = injectOf(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE)
 
     fun init() {
         LootTableEvents.MODIFY.register { key, tableBuilder, _, _ ->
-            when (key) {
-                BuiltInLootTables.PILLAGER_OUTPOST -> tableBuilder.withPool(lootPool().add(lootTableReference(PILLAGER_OUTPOST)))
-                BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE -> tableBuilder.withPool(lootPool().add(lootTableReference(TRIAL_CHAMBERS_REWARD_RARE)))
-            }
+            val inject = INJECTS[key] ?: return@register
+            tableBuilder.withPool(lootPool().add(lootTableReference(inject)))
         }
     }
 }
