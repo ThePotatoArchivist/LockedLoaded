@@ -77,6 +77,7 @@ public class CrossbowItemMixin {
             at = @At("TAIL")
     )
     private void fixAdditional(ItemStack itemStack, Level level, LivingEntity entity, int remainingTime, CallbackInfoReturnable<Boolean> cir) {
+        if (!(entity instanceof Player)) return;
         var additional = itemStack.remove(LockedLoadedComponents.ADDITIONAL_CHARGED_PROJECTILES);
         if (itemStack.getOrDefault(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY).isEmpty())
             itemStack.set(DataComponents.CHARGED_PROJECTILES, additional);
