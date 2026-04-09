@@ -13,6 +13,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
@@ -30,28 +31,27 @@ class LootTableGenerator(
             withOneOf(HolderSet.direct(registries::getOrThrow, *enchantments))
         }
 
-        output.accept(LockedLoadedLoot.PILLAGER_OUTPOST, lootTable {
-            pool {
-                item(Items.BOOK) {
-                    apply(enchantWith(
+        fun LootPool.Builder.bookEntry() {
+            item(Items.BOOK) {
+                apply(
+                    enchantWith(
                         LockedLoadedEnchantments.PUMP_CHARGE,
                         LockedLoadedEnchantments.SHARPSHOOTING,
                         LockedLoadedEnchantments.ROCKETRY,
-                    ))
-                }
-                empty(weight = 4)
+                    )
+                )
+            }
+        }
+
+        output.accept(LockedLoadedLoot.PILLAGER_OUTPOST, lootTable {
+            pool {
+                bookEntry()
+                empty(weight = 3)
             }
         })
         output.accept(LockedLoadedLoot.TRIAL_CHAMBERS_REWARD_RARE, lootTable {
             pool {
-                item(Items.BOOK) {
-                    apply(enchantWith(
-                        LockedLoadedEnchantments.PUMP_CHARGE,
-                        LockedLoadedEnchantments.SHARPSHOOTING,
-                        LockedLoadedEnchantments.ROCKETRY,
-                    ))
-                }
-                empty(weight = 4)
+                bookEntry()
             }
         })
     }

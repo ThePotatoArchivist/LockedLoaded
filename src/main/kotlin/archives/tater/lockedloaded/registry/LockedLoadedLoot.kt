@@ -12,19 +12,28 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable.lootTableR
 object LockedLoadedLoot {
     private fun of(path: String) = ResourceKey.create(Registries.LOOT_TABLE, LockedLoaded.id(path))
 
-    private val INJECTS = mutableMapOf<ResourceKey<LootTable>, ResourceKey<LootTable>>()
+    private data class Inject(val table: ResourceKey<LootTable>, val poolWeight: Int? = null)
 
-    private fun injectOf(table: ResourceKey<LootTable>) = of("inject/${table.identifier().path}").also {
-        INJECTS[table] = it
+    private val INJECTS = mutableMapOf<ResourceKey<LootTable>, Inject>()
+
+    private fun injectOf(table: ResourceKey<LootTable>, poolWeight: Int? = null) = of("inject/${table.identifier().path}").also {
+        INJECTS[table] = Inject(it, poolWeight)
     }
 
     val PILLAGER_OUTPOST = injectOf(BuiltInLootTables.PILLAGER_OUTPOST)
-    val TRIAL_CHAMBERS_REWARD_RARE = injectOf(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE)
+    val TRIAL_CHAMBERS_REWARD_RARE = injectOf(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE, poolWeight = 2)
 
     fun init() {
         LootTableEvents.MODIFY.register { key, tableBuilder, _, _ ->
-            val inject = INJECTS[key] ?: return@register
-            tableBuilder.withPool(lootPool().add(lootTableReference(inject)))
+            val (table, poolWeight) = INJECTS[key] ?: return@register
+            if (poolWeight == null)
+                tableBuilder.withPool(lootPool()
+                    .add(lootTableReference(table)))
+            else
+                tableBuilder.modifyPools {
+                    it.add(lootTableReference(table)
+                        .setWeight(poolWeight))
+                }
         }
     }
 }

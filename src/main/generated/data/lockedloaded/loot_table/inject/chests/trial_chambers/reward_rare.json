@@ -17,10 +17,6 @@
             }
           ],
           "name": "minecraft:book"
-        },
-        {
-          "type": "minecraft:empty",
-          "weight": 4
         }
       ],
       "rolls": 1.0
