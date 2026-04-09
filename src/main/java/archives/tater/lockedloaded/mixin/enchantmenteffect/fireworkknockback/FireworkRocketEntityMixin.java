@@ -1,6 +1,7 @@
 package archives.tater.lockedloaded.mixin.enchantmenteffect.fireworkknockback;
 
-import archives.tater.lockedloaded.enchantment.FireworkKnockbackKt;
+
+import archives.tater.lockedloaded.enchantment.FireworkKnockback;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -30,7 +31,7 @@ public abstract class FireworkRocketEntityMixin extends Projectile {
 
         var result = original.call(instance, level, source, amount);
 
-        FireworkKnockbackKt.applyFireworkKnockback((FireworkRocketEntity) (Object) this, instance, 5.0, oldMovement);
+        FireworkKnockback.apply((FireworkRocketEntity) (Object) this, instance, 5.0, oldMovement);
 
         return result;
     }

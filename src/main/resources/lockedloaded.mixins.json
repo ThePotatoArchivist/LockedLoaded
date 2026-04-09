@@ -36,6 +36,7 @@
     "enchantmenteffect.uncertainty.ProjectileWeaponItemMixin",
     "enchantmenteffect.velocity.ProjectileWeaponItemMixin",
     "rocketride.EntityMixin",
+    "rocketride.FireworkRocketEntityAccessor",
     "rocketride.FireworkRocketEntityMixin",
     "rocketride.ProjectileMixin"
   ],

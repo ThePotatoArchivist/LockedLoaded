@@ -27,8 +27,8 @@
     "lockedloaded:firework_owner_knockback": [
       {
         "effect": {
-          "type": "minecraft:add",
-          "value": 4.0
+          "base": 2.0,
+          "per_extra_explosion": 1.0
         }
       }
     ],
@@ -122,6 +122,7 @@
               "predicate": {
                 "flags": {
                   "is_fall_flying": false,
+                  "is_flying": false,
                   "is_in_water": false,
                   "is_on_ground": false
                 },
@@ -136,7 +137,8 @@
               "condition": "lockedloaded:entity_looking",
               "target": "target_entity",
               "x_rot": {
-                "max": -45.0
+                "max": 90.0,
+                "min": 45.0
               }
             }
           ]

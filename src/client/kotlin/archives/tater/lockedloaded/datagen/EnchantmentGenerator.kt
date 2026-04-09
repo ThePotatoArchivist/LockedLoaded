@@ -8,7 +8,7 @@ import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.criterion.CollectionPredicate
 import net.minecraft.advancements.criterion.EntityFlagsPredicate.Builder.flags
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.MinMaxBounds.Bounds.between
 import net.minecraft.advancements.criterion.MinMaxBounds.Doubles.atMost
 import net.minecraft.advancements.criterion.MinMaxBounds.FloatDegrees
 import net.minecraft.advancements.criterion.MinMaxBounds.Ints
@@ -169,7 +169,10 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 ItemStackTemplate(Items.FIREWORK_ROCKET)
             ))
 
-            withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, AddValue(LevelBasedValue.constant(4f)))
+            withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, FireworkKnockback(
+                base = LevelBasedValue.constant(2f),
+                perExtraExplosion = LevelBasedValue.constant(1f)
+            ))
 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNT, McUnit.INSTANCE, allOf(
                 LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate {
@@ -177,15 +180,16 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 }),
                 LootItemEntityPropertyCondition.hasProperties(EntityTarget.TARGET_ENTITY, EntityPredicate {
                     moving(MovementPredicate(
-                        y = atMost(0.0),
+                        y = atMost(-0.01),
                     ))
                     flags(flags().apply {
                         setOnGround(false)
                         setIsInWater(false)
                         setIsFallFlying(false)
+                        setIsFlying(false)
                     })
                 }),
-                EntityLookingCondition(EntityTarget.TARGET_ENTITY, xRot = FloatDegrees(MinMaxBounds.Bounds.atMost(-45f)))
+                EntityLookingCondition(EntityTarget.TARGET_ENTITY, xRot = FloatDegrees(between(45f, 90f)))
             ))
         }
 

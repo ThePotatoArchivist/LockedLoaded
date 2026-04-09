@@ -41,7 +41,7 @@ public abstract class FireworkRocketEntityMixin extends Entity {
             at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;life:I", opcode = Opcodes.PUTFIELD)
     )
     private boolean increaseLifeMounted(FireworkRocketEntity instance, int value) {
-        return life <= 0 || getPassengers().isEmpty() || tickCount % 3 == 0;
+        return life <= 0 || getPassengers().isEmpty() || tickCount % 4 == 0;
     }
 
     @Inject(
@@ -52,17 +52,16 @@ public abstract class FireworkRocketEntityMixin extends Entity {
         var controller = getControllingPassenger();
         if (controller == null || !canSimulateMovement()) return;
 
-        if (!rideInitialized) {
-            riddenSpeed = getDeltaMovement().length();
-            riddenXRot = getDeltaMovement().rotation().x;
-            riddenYRot = getDeltaMovement().rotation().y;
-            rideInitialized = true;
-        }
-
         var strafe = controller.xxa;
         var forward = controller.zza;
 
-        if (strafe == 0 && forward == 0) return;
+        if (strafe == 0 && forward == 0 && rideInitialized) return;
+
+        if (!rideInitialized) {
+            riddenSpeed = getDeltaMovement().length();
+            riddenYRot = getDeltaMovement().rotation().y;
+            rideInitialized = true;
+        }
 
         riddenXRot += -5 * forward;
         riddenYRot += -5 * strafe;
