@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.objectweb.asm.Opcodes;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal.CrossbowState;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
@@ -84,6 +85,16 @@ public class RangedCrossbowAttackGoalMixin<T extends Monster & RangedAttackMob &
         return RangedCrossbowAttackGoal.CrossbowState.CHARGED;
     }
 
+    @WrapOperation(
+            method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Monster;startUsingItem(Lnet/minecraft/world/InteractionHand;)V")
+    )
+    private void saveProjectiles(Monster instance, InteractionHand interactionHand, Operation<Void> original) {
+        var stack = instance.getItemInHand(interactionHand);
+        stack.set(LockedLoadedComponents.ADDITIONAL_CHARGED_PROJECTILES, stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY));
+        original.call(instance, interactionHand);
+    }
+
     @Definition(id = "crossbowState", field = "Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal;crossbowState:Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal$CrossbowState;")
     @Definition(id = "CHARGED", field = "Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal$CrossbowState;CHARGED:Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal$CrossbowState;")
     @Expression("this.crossbowState = CHARGED")
@@ -99,9 +110,7 @@ public class RangedCrossbowAttackGoalMixin<T extends Monster & RangedAttackMob &
             return;
         }
 
-        stack.set(LockedLoadedComponents.ADDITIONAL_CHARGED_PROJECTILES, stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY));
-        mob.startUsingItem(hand);
-        original.call(instance, CrossbowState.CHARGING);
+        original.call(instance, CrossbowState.UNCHARGED);
         ci.cancel();
     }
 
