@@ -30,7 +30,7 @@ public class ProjectileWeaponItemMixin {
                     LockedLoadedLootContext.projectileContext(level, enchantmentLevel, original),
                     _ -> {
                         shooter.startRiding(original);
-                        original.setDeltaMovement(Vec3.directionFromRotation(0, shooter.getYRot()).scale(original.getDeltaMovement().length()));
+                        original.setDeltaMovement(Vec3.directionFromRotation(0, shooter.getYRot()).scale(original.getDeltaMovement().length() / 2));
                     }
             );
         });
