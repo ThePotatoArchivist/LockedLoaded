@@ -1,5 +1,6 @@
 package archives.tater.lockedloaded.datagen
 
+import archives.tater.lockedloaded.registry.LockedLoadedTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.minecraft.core.HolderLookup
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.DamageTypeTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType
+import net.minecraft.world.damagesource.DamageTypes
 import java.util.concurrent.CompletableFuture
 
 class DamageTagGenerator(
@@ -21,8 +23,9 @@ class DamageTagGenerator(
     }
 
     override fun addTags(registries: HolderLookup.Provider) {
-        buildTag(DamageTypeTags.BYPASSES_COOLDOWN) {
+        buildTag(LockedLoadedTags.BYPASSES_COOLDOWN_SAME_ATTACKER) {
             forceAddTag(DamageTypeTags.IS_PROJECTILE)
+            +DamageTypes.FIREWORKS
         }
     }
 
