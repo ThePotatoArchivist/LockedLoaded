@@ -1,9 +1,23 @@
 {
   "enchantment.lockedloaded.magazine": "Magazine",
+  "enchantment.lockedloaded.magazine.desc": "Loads many shots with a long charge time, then lets you fire them in sequence with a short cooldown",
+  "enchantment.lockedloaded.magazine.description": "An enchantment that loads many shots with a long charge time, then lets you fire them in sequence with a short cooldown",
   "enchantment.lockedloaded.multichambered": "Multichambered",
+  "enchantment.lockedloaded.multichambered.desc": "Allows loading multiple shots by crouching, then firing them in sequence",
+  "enchantment.lockedloaded.multichambered.description": "An enchantment that allows loading multiple shots by crouching, then firing them in sequence",
   "enchantment.lockedloaded.pump_charge": "Pump Charge",
+  "enchantment.lockedloaded.pump_charge.desc": "Allows loading multiple shots by crouching, then firing them all at once in a spread",
+  "enchantment.lockedloaded.pump_charge.description": "An enchantment that allows loading multiple shots by crouching, then firing them all at once in a spread",
   "enchantment.lockedloaded.recovery": "Recovery",
+  "enchantment.lockedloaded.recovery.desc": "Prevents arrows from getting destroyed upon impact and being picked up by other players",
+  "enchantment.lockedloaded.recovery.description": "An enchantment that prevents arrows from getting destroyed upon impact and being picked up by other players",
   "enchantment.lockedloaded.rocketry": "Rocketry",
+  "enchantment.lockedloaded.rocketry.desc": "Gives empty firework rockets explosions and allows rocket jumping and rocket riding",
+  "enchantment.lockedloaded.rocketry.description": "An enchantment that gives empty firework rockets explosions and allows rocket jumping and rocket riding",
   "enchantment.lockedloaded.sharpshooting": "Sharpshooting",
-  "enchantment.lockedloaded.twirling_curse": "Curse of Twirling"
+  "enchantment.lockedloaded.sharpshooting.desc": "Makes arrows pierce mobs and ricochet off blocks",
+  "enchantment.lockedloaded.sharpshooting.description": "An enchantment that makes arrows pierce mobs and ricochet off blocks",
+  "enchantment.lockedloaded.twirling_curse": "Curse of Twirling",
+  "enchantment.lockedloaded.twirling_curse.desc": "Makes you spin loaded crossbows to fire them",
+  "enchantment.lockedloaded.twirling_curse.description": "An enchantment that makes you spin loaded crossbows to fire them"
 }
