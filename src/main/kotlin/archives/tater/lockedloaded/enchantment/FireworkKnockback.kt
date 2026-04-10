@@ -4,6 +4,7 @@ import archives.tater.lockedloaded.registry.LockedLoadedAttachments
 import archives.tater.lockedloaded.util.*
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.core.Direction
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.FireworkRocketEntity
 import net.minecraft.world.item.enchantment.LevelBasedValue
@@ -24,11 +25,12 @@ data class FireworkKnockback(val base: LevelBasedValue, val perExtraExplosion: L
 
         @JvmStatic
         fun apply(firework: FireworkRocketEntity, entity: LivingEntity, radius: Double, oldMovement: Vec3) {
-            if (entity != firework.owner || entity.onGround() || entity.isPassenger) return
+            if (entity != firework.owner || entity.isPassenger) return
             val knockback = firework.getAttachedOrElse(LockedLoadedAttachments.FIREWORK_OWNER_KNOCKBACK, 0f);
             if (knockback <= 0) return
 
-            entity.deltaMovement = oldMovement + (entity.centerPos - firework.position()) * (knockback / radius)
+            val offset = entity.centerPos - firework.position()
+            entity.deltaMovement = (if (entity.onGround()) oldMovement.with(Direction.Axis.Y, 0.0) else oldMovement) + offset.normalize() * (knockback * (1 - offset.length() / radius))
             entity.setIgnoreFallDamageFromCurrentImpulse(true, entity.position())
             entity.hurtMarked = true
             entity[LockedLoadedAttachments.DISCARD_FRICTION_CURRENT_IMPULSE] = McUnit.INSTANCE

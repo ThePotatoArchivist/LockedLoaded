@@ -27,8 +27,8 @@
     "lockedloaded:firework_owner_knockback": [
       {
         "effect": {
-          "base": 2.0,
-          "per_extra_explosion": 1.0
+          "base": 1.5,
+          "per_extra_explosion": 0.5
         }
       }
     ],

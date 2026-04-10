@@ -170,8 +170,8 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             ))
 
             withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, FireworkKnockback(
-                base = LevelBasedValue.constant(2f),
-                perExtraExplosion = LevelBasedValue.constant(1f)
+                base = LevelBasedValue.constant(1.5f),
+                perExtraExplosion = LevelBasedValue.constant(0.5f)
             ))
 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNT, McUnit.INSTANCE, allOf(
