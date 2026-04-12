@@ -8,7 +8,7 @@
 		"ThePotatoArchivist"
 	],
 	"contact": {
-		"homepage": "https://modrinth.com/project/locked-n-loaded",
+		"homepage": "https://modrinth.com/project/locked-loaded",
 		"sources": "https://github.com/ThePotatoArchivist/LockedLoaded/"
 	},
 	"license": "LGPL-3.0-or-later",
@@ -43,8 +43,8 @@
 	],
 	"accessWidener": "lockedloaded.classtweaker",
 	"depends": {
-		"fabricloader": ">=0.18.4",
-		"minecraft": "~26.1-",
+		"fabricloader": ">=0.18.5",
+		"minecraft": "~26.1",
 		"java": ">=25",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"
