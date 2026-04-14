@@ -6,7 +6,6 @@
     "CrossbowItemMixin",
     "LootContextParamSetsAccessor",
     "ProjectileWeaponItemMixin",
-    "ThrownTridentMixin",
     "damagecooldown.LivingEntityMixin",
     "enchantmenteffect.cooldown.CrossbowItemMixin",
     "enchantmenteffect.defaultprojectile.EntityGetProjectileMixin",
