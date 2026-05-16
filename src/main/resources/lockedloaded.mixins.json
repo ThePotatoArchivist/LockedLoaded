@@ -39,6 +39,7 @@
     "rocketride.EntityMixin",
     "rocketride.FireworkRocketEntityAccessor",
     "rocketride.FireworkRocketEntityMixin",
+    "rocketride.PiercingWeaponMixin",
     "rocketride.ProjectileMixin"
   ],
   "injectors": {
