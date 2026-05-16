@@ -103,7 +103,7 @@
         }
       }
     ],
-    "lockedloaded:projectile_mount": [
+    "lockedloaded:projectile_mountable": [
       {
         "effect": {},
         "requirements": {
@@ -114,31 +114,6 @@
               "entity": "this",
               "predicate": {
                 "type": "minecraft:firework_rocket"
-              }
-            },
-            {
-              "condition": "minecraft:entity_properties",
-              "entity": "target_entity",
-              "predicate": {
-                "flags": {
-                  "is_fall_flying": false,
-                  "is_flying": false,
-                  "is_in_water": false,
-                  "is_on_ground": false
-                },
-                "movement": {
-                  "y": {
-                    "max": -0.01
-                  }
-                }
-              }
-            },
-            {
-              "condition": "lockedloaded:entity_looking",
-              "target": "target_entity",
-              "x_rot": {
-                "max": 90.0,
-                "min": 45.0
               }
             }
           ]

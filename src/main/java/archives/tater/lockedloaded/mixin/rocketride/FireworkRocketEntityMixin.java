@@ -1,8 +1,10 @@
 package archives.tater.lockedloaded.mixin.rocketride;
 
 import archives.tater.lockedloaded.network.ServerboundRideFireworkPayload;
+import archives.tater.lockedloaded.registry.LockedLoadedAttachments;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,6 +19,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import static java.lang.Math.min;
 
 @Mixin(FireworkRocketEntity.class)
 public abstract class FireworkRocketEntityMixin extends Entity {
@@ -59,6 +63,7 @@ public abstract class FireworkRocketEntityMixin extends Entity {
 
         if (!rideInitialized) {
             riddenSpeed = getDeltaMovement().length();
+            riddenXRot = min(0, getDeltaMovement().rotation().x); // if falling, go horizontal
             riddenYRot = getDeltaMovement().rotation().y;
             rideInitialized = true;
         }
@@ -68,5 +73,13 @@ public abstract class FireworkRocketEntityMixin extends Entity {
         var movement = Vec3.directionFromRotation(riddenXRot, riddenYRot).scale(riddenSpeed);
         setDeltaMovement(movement);
         if (level().isClientSide()) ClientPlayNetworking.send(new ServerboundRideFireworkPayload(movement));
+    }
+
+    @ModifyReturnValue(
+            method = "isAttackable",
+            at = @At("RETURN")
+    )
+    private boolean allowInteract(boolean original) {
+        return original || hasAttached(LockedLoadedAttachments.MOUNTABLE_PROJECTILE);
     }
 }

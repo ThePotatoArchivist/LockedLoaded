@@ -1,5 +1,7 @@
 package archives.tater.lockedloaded.mixin.rocketride;
 
+import archives.tater.lockedloaded.registry.LockedLoadedAttachments;
+
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,5 +25,13 @@ public abstract class ProjectileMixin extends Entity {
     )
     private boolean fireworkNoHitPassenger(boolean original, Entity entity) {
         return original && (!((Object) this instanceof FireworkRocketEntity) || !isPassengerOfSameVehicle(entity));
+    }
+
+    @ModifyReturnValue(
+            method = "isPickable",
+            at = @At("RETURN")
+    )
+    private boolean allowInteract(boolean original) {
+        return original || hasAttached(LockedLoadedAttachments.MOUNTABLE_PROJECTILE);
     }
 }

@@ -27,44 +27,50 @@ object LockedLoadedAttachments {
     }
 
     @JvmField
-    val IGNORE_OWNER = register<McUnit>("ignore_owner") {
+    val IGNORE_OWNER = register("ignore_owner") {
         persistent(McUnit.CODEC)
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
     @JvmField
-    val PIERCE_DEFLECTION = register<Set<PierceDeflection>>("pierce_deflection") {
+    val PIERCE_DEFLECTION = register("pierce_deflection") {
         persistent(PierceDeflection.SET_CODEC)
     }
 
     @JvmField
-    val SPINNING_ITEM = register<McUnit>("spinning_item") {
+    val SPINNING_ITEM = register("spinning_item") {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
     @JvmField
-    val FIREWORK_OWNER_KNOCKBACK = register<Float>("firework_owner_knockback") {
+    val FIREWORK_OWNER_KNOCKBACK = register("firework_owner_knockback") {
         persistent(ExtraCodecs.NON_NEGATIVE_FLOAT)
     }
 
     @JvmField
-    val DISCARD_FRICTION_CURRENT_IMPULSE = register<McUnit>("discard_friction_current_impulse") {
+    val DISCARD_FRICTION_CURRENT_IMPULSE = register("discard_friction_current_impulse") {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
     @JvmField
-    val PROJECTILE_PERSISTENT = register<McUnit>("projectile_persistent") {
+    val PROJECTILE_PERSISTENT = register("projectile_persistent") {
         persistent(McUnit.CODEC)
     }
 
     @JvmField
-    val PROJECTILE_DEALT_DAMAGE = register<McUnit>("projectile_dealt_damage") {
+    val PROJECTILE_DEALT_DAMAGE = register("projectile_dealt_damage") {
         persistent(McUnit.CODEC)
     }
 
     @JvmField
-    val PROJECTILE_OWNER_PICKUP = register<McUnit>("projectile_owner_pickup") {
+    val PROJECTILE_OWNER_PICKUP = register("projectile_owner_pickup") {
         persistent(McUnit.CODEC)
+    }
+
+    @JvmField
+    val MOUNTABLE_PROJECTILE = register("mountable_projectile") {
+        persistent(McUnit.CODEC)
+        syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
     internal fun init() {

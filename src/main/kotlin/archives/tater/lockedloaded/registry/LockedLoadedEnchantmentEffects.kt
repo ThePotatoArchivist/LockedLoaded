@@ -115,7 +115,7 @@ object LockedLoadedEnchantmentEffects {
     ))
 
     @JvmField
-    val PROJECTILE_MOUNT = register("projectile_mount", validatedListCodec(
+    val PROJECTILE_MOUNTABLE = register("projectile_mountable", validatedListCodec(
         ConditionalEffect.codec(McUnit.CODEC),
         LockedLoadedLootContext.ENCHANTED_PROJECTILE
     ))
