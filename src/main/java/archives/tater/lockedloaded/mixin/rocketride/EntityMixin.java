@@ -30,6 +30,12 @@ public abstract class EntityMixin implements AttachmentTarget {
     @Shadow
     public abstract Level level();
 
+    @Shadow
+    public abstract void setDeltaMovement(Vec3 deltaMovement);
+
+    @Shadow
+    public abstract Vec3 getDeltaMovement();
+
     @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "getControllingPassenger",

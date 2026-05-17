@@ -34,4 +34,12 @@ public abstract class ProjectileMixin extends Entity {
     private boolean allowInteract(boolean original) {
         return original || hasAttached(LockedLoadedAttachments.MOUNTABLE_PROJECTILE);
     }
+
+    @ModifyReturnValue(
+            method = "getPickRadius",
+            at = @At("RETURN")
+    )
+    private float expandPickRadius(float original) {
+        return original > 0 && hasAttached(LockedLoadedAttachments.MOUNTABLE_PROJECTILE) ? original + 1 : original;
+    }
 }

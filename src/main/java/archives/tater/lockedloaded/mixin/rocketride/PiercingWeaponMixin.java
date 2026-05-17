@@ -48,9 +48,10 @@ public class PiercingWeaponMixin {
     )
     private boolean dismountRocket(LivingEntity instance, EquipmentSlot weaponSlot, Entity target, float baseDamage, boolean dealsDamage, boolean dealsKnockback, boolean dismounts, Operation<Boolean> original) {
         var result = original.call(instance, weaponSlot, target, baseDamage, dealsDamage, dealsKnockback, dismounts);
-        if (!result || !(target instanceof FireworkRocketEntity)) return result;
+        if (!result || !(target instanceof FireworkRocketEntity fireworkRocket)) return result;
         if (instance.getVehicle() == target) instance.stopRiding();
-        target.setDeltaMovement(instance.getLookAngle().scale(target.getDeltaMovement().length()));
+        fireworkRocket.setDeltaMovement(instance.getLookAngle().scale(target.getDeltaMovement().length()));
+        ((FireworkRocketEntityAccessor) fireworkRocket).setLifetime(Integer.MAX_VALUE);
         return true;
     }
 }

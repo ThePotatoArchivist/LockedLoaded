@@ -25,15 +25,17 @@ data class FireworkKnockback(val base: LevelBasedValue, val perExtraExplosion: L
 
         @JvmStatic
         fun apply(firework: FireworkRocketEntity, entity: LivingEntity, radius: Double, oldMovement: Vec3) {
-            if (entity != firework.owner || entity.isPassenger) return
+            if (entity.isPassenger) return
             val knockback = firework.getAttachedOrElse(LockedLoadedAttachments.FIREWORK_OWNER_KNOCKBACK, 0f);
             if (knockback <= 0) return
 
             val offset = entity.centerPos - firework.position()
             entity.deltaMovement = (if (entity.onGround()) oldMovement.with(Direction.Axis.Y, 0.0) else oldMovement) + offset.normalize() * (knockback * (1 - offset.length() / radius))
-            entity.setIgnoreFallDamageFromCurrentImpulse(true, entity.position())
             entity.hurtMarked = true
-            entity[LockedLoadedAttachments.DISCARD_FRICTION_CURRENT_IMPULSE] = McUnit.INSTANCE
+            if (entity == firework.owner) {
+                entity.setIgnoreFallDamageFromCurrentImpulse(true, entity.position())
+                entity[LockedLoadedAttachments.DISCARD_FRICTION_CURRENT_IMPULSE] = McUnit.INSTANCE
+            }
         }
     }
 }

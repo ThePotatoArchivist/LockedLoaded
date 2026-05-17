@@ -62,7 +62,7 @@ public abstract class FireworkRocketEntityMixin extends Entity {
         if (strafe == 0 && forward == 0 && rideInitialized) return;
 
         if (!rideInitialized) {
-            riddenSpeed = getDeltaMovement().length();
+            riddenSpeed = getDeltaMovement().length() / 2;
             riddenXRot = min(0, getDeltaMovement().rotation().x); // if falling, go horizontal
             riddenYRot = getDeltaMovement().rotation().y;
             rideInitialized = true;

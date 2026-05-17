@@ -1,6 +1,7 @@
 package archives.tater.lockedloaded.mixin.rocketride;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
@@ -12,4 +13,7 @@ import java.util.List;
 public interface FireworkRocketEntityAccessor {
     @Invoker
     List<FireworkExplosion> invokeGetExplosions();
+
+    @Accessor
+    void setLifetime(int lifetime);
 }
