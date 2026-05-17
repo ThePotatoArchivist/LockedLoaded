@@ -27,6 +27,8 @@
     "enchantmenteffect.piercedeflection.LivingEntityMixin",
     "enchantmenteffect.piercedeflection.ShulkerMixin",
     "enchantmenteffect.piercedeflection.WitherMixin",
+    "enchantmenteffect.projectilemount.EntityMixin",
+    "enchantmenteffect.projectilemount.ProjectileMixin",
     "enchantmenteffect.projectilemount.ProjectileWeaponItemMixin",
     "enchantmenteffect.ricochet.AbstractArrowMixin",
     "enchantmenteffect.spin.CrossbowItemMixin",
