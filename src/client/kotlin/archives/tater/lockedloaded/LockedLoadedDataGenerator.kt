@@ -18,6 +18,7 @@ object LockedLoadedDataGenerator : DataGeneratorEntrypoint {
 			addProvider(dynamicRegistry("Enchantments", Registries.ENCHANTMENT))
 			addProvider(::ItemTagGenerator)
 			addProvider(::EnchantmentTagGenerator)
+			addProvider(::EnchantmentProviderGenerator)
 			addProvider(::DamageTagGenerator)
 			addProvider(::LangGenerator)
 			addProvider(::LootTableGenerator)

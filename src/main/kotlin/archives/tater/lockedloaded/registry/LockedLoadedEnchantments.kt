@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.item.v1.EnchantmentEvents
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.providers.EnchantmentProvider
 import kotlin.jvm.optionals.getOrNull
 
 object LockedLoadedEnchantments {
@@ -24,8 +24,8 @@ object LockedLoadedEnchantments {
     @JvmField val RECOVERY = of("recovery")
     @JvmField val TWIRLING_CURSE = of("twirling_curse")
 
-    @JvmField val MAGAZINE_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/magazine"))
-    @JvmField val MULTICHAMBERED_EXCLUSIVE: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, LockedLoaded.id("exclusive_set/multichambered"))
+    @JvmField val RAID_PILLAGER_POST_WAVE_5_RARE: ResourceKey<EnchantmentProvider> = ResourceKey.create(Registries.ENCHANTMENT_PROVIDER, LockedLoaded.id("raid_pillager_post_wave_5_rare"))
+    @JvmField val RAID_PILLAGER_POST_WAVE_5_COMMON: ResourceKey<EnchantmentProvider> = ResourceKey.create(Registries.ENCHANTMENT_PROVIDER, LockedLoaded.id("raid_pillager_post_wave_5_common"))
 
     internal fun init() {
         EnchantmentEvents.MODIFY.register { key, builder, source ->

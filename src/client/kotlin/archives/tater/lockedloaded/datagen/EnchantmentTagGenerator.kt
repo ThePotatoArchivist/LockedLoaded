@@ -1,5 +1,6 @@
 package archives.tater.lockedloaded.datagen
 
+import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentTags
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
@@ -46,15 +47,21 @@ class EnchantmentTagGenerator(
             +LockedLoadedEnchantments.PUMP_CHARGE
             +LockedLoadedEnchantments.ROCKETRY
         }
-        buildTag(LockedLoadedEnchantments.MAGAZINE_EXCLUSIVE) {
+        buildTag(LockedLoadedEnchantmentTags.MAGAZINE_EXCLUSIVE) {
             +EnchantmentTags.CROSSBOW_EXCLUSIVE
             +Enchantments.QUICK_CHARGE
             +LockedLoadedEnchantments.MULTICHAMBERED
         }
-        buildTag(LockedLoadedEnchantments.MULTICHAMBERED_EXCLUSIVE) {
+        buildTag(LockedLoadedEnchantmentTags.MULTICHAMBERED_EXCLUSIVE) {
             +Enchantments.QUICK_CHARGE
             +Enchantments.MULTISHOT
             +LockedLoadedEnchantments.PUMP_CHARGE
+        }
+        buildTag(LockedLoadedEnchantmentTags.RAID_PILLAGER_POST_WAVE_5_RARE) {
+            +LockedLoadedEnchantments.PUMP_CHARGE
+            +LockedLoadedEnchantments.MULTICHAMBERED
+            +LockedLoadedEnchantments.ROCKETRY
+            +LockedLoadedEnchantments.SHARPSHOOTING
         }
 
         buildTag(penchantTag("common")) {

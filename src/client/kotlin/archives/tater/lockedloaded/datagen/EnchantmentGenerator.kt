@@ -3,6 +3,7 @@ package archives.tater.lockedloaded.datagen
 import archives.tater.lockedloaded.enchantment.*
 import archives.tater.lockedloaded.loot.function.RandomFireworks
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
+import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentTags
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.criterion.CollectionPredicate
@@ -58,7 +59,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             2,
             EquipmentSlotGroup.MAINHAND
         )) {
-            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantments.MULTICHAMBERED_EXCLUSIVE))
+            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantmentTags.MULTICHAMBERED_EXCLUSIVE))
             withSpecialEffect(LockedLoadedEnchantmentEffects.LOAD_MULTIPLE, LoadMultiple(LevelBasedValue.perLevel(2f)))
             withSpecialEffect(LockedLoadedEnchantmentEffects.CHARGED_PROJECTILE_INDICATOR, ChargedProjectileIndicator(LevelBasedValue.perLevel(2f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_FIRED_COUNT, SetValue(LevelBasedValue.constant(1f)))
@@ -90,7 +91,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
-            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantments.MAGAZINE_EXCLUSIVE))
+            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantmentTags.MAGAZINE_EXCLUSIVE))
             withEffect(EnchantmentEffectComponents.PROJECTILE_COUNT, SetValue(LevelBasedValue.perLevel(4f)))
             withSpecialEffect(LockedLoadedEnchantmentEffects.CHARGED_PROJECTILE_INDICATOR, ChargedProjectileIndicator(LevelBasedValue.perLevel(4f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_FIRED_COUNT, SetValue(LevelBasedValue.constant(1f)))

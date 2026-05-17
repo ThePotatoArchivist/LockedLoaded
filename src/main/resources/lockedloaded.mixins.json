@@ -37,6 +37,7 @@
     "enchantmenteffect.supportedprojectiles.PlayerMixin",
     "enchantmenteffect.uncertainty.ProjectileWeaponItemMixin",
     "enchantmenteffect.velocity.ProjectileWeaponItemMixin",
+    "mob.PillagerMixin",
     "mob.RangedCrossbowAttackGoalMixin",
     "rocketride.EntityMixin",
     "rocketride.FireworkRocketEntityAccessor",

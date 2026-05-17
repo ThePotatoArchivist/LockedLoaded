@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:single",
+  "enchantment": "lockedloaded:multichambered",
+  "level": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 3,
+    "min_inclusive": 2
+  }
+}

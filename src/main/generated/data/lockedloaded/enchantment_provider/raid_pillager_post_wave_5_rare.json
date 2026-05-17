@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:by_cost",
+  "cost": 50,
+  "enchantments": "#lockedloaded:raid_pillager_post_wave_5_rare"
+}
