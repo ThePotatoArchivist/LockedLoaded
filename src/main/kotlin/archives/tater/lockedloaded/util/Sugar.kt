@@ -5,11 +5,11 @@ package archives.tater.lockedloaded.util
 import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import com.mojang.serialization.Codec
-import net.minecraft.advancements.criterion.DataComponentMatchers
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
-import net.minecraft.advancements.criterion.MovementPredicate
+import net.minecraft.advancements.predicates.DataComponentMatchers
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.predicates.MinMaxBounds
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.predicates.entity.MovementPredicate
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderSet
 import net.minecraft.core.TypedInstance

@@ -4,7 +4,7 @@ package archives.tater.lockedloaded.util
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
-import net.minecraft.advancements.criterion.MinMaxBounds.FloatDegrees
+import net.minecraft.advancements.predicates.MinMaxBounds.FloatDegrees
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType

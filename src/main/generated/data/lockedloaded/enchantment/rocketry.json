@@ -12,7 +12,6 @@
         "type": "minecraft:enchanted_entity",
         "pools": [
           {
-            "bonus_rolls": 0.0,
             "entries": [
               {
                 "type": "minecraft:item",
@@ -113,7 +112,7 @@
               "condition": "minecraft:entity_properties",
               "entity": "this",
               "predicate": {
-                "type": "minecraft:firework_rocket"
+                "minecraft:entity_type": "minecraft:firework_rocket"
               }
             }
           ]

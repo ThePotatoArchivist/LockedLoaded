@@ -9,12 +9,12 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 
-context(appender: TagAppender<E, *>)
-operator fun <E: Any> E.unaryPlus() {
+context(appender: TagAppender<E>)
+operator fun <E: Any> ResourceKey<E>.unaryPlus() {
     appender.add(this)
 }
 
-context(appender: TagAppender<*, T>)
+context(appender: TagAppender<T>)
 operator fun <T: Any> TagKey<T>.unaryPlus() {
     appender.forceAddTag(this)
 }

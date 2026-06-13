@@ -6,8 +6,8 @@ import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentTags
 import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
-import net.minecraft.advancements.criterion.CollectionPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds.Ints
+import net.minecraft.advancements.predicates.CollectionPredicate
+import net.minecraft.advancements.predicates.MinMaxBounds.Ints
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.predicates.DataComponentPredicates
 import net.minecraft.core.component.predicates.FireworksPredicate
@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
@@ -119,11 +119,13 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             ItemPredicate {
                 withComponents {
                     partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
-                        Optional.of(CollectionPredicate(
-                            Optional.empty(),
-                            Optional.empty(),
-                            Optional.of(Ints.exactly(0))
-                        )),
+                        Optional.of(
+                            CollectionPredicate(
+                                Optional.empty(),
+                                Optional.empty(),
+                                Optional.of(Ints.exactly(0))
+                            )
+                        ),
                         duration
                     ))
                 }
@@ -172,7 +174,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNTABLE, McUnit.INSTANCE, allOf(
                 LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate {
-                    of(entities, EntityType.FIREWORK_ROCKET)
+                    of(entities, EntityTypes.FIREWORK_ROCKET)
                 }),
             ))
         }

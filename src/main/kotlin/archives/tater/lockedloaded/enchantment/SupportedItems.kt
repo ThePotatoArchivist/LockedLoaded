@@ -3,7 +3,7 @@ package archives.tater.lockedloaded.enchantment
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.util.Util
 import net.minecraft.world.item.ItemStack
