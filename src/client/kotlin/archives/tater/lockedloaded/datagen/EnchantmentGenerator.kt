@@ -8,6 +8,8 @@ import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.predicates.CollectionPredicate
 import net.minecraft.advancements.predicates.MinMaxBounds.Ints
+import net.minecraft.core.HolderGetter
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.predicates.DataComponentPredicates
 import net.minecraft.core.component.predicates.FireworksPredicate
@@ -17,8 +19,10 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.FireworkExplosion.Shape
@@ -38,6 +42,13 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import java.util.*
 
 object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
+    fun enchantment(definition: EnchantmentDefinition, init: Enchantment.Builder.() -> Unit) =
+        enchantment(definition).apply(init)
+
+    private operator fun BootstrapContext<Enchantment>.set(key: ResourceKey<Enchantment>, builder: Enchantment.Builder) {
+        this[key] = builder.build(key.identifier())
+    }
+
     override fun run(registry: BootstrapContext<Enchantment>) {
         val items = registry.lookup(Registries.ITEM)
         val entities = registry.lookup(Registries.ENTITY_TYPE)
@@ -45,12 +56,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
         val crossbowEnchantable = items.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE)
         val crossbowExclusive = enchantments.getOrThrow(EnchantmentTags.CROSSBOW_EXCLUSIVE)
 
-        fun register(key: ResourceKey<Enchantment>, definition: EnchantmentDefinition, init: Enchantment.Builder.() -> Unit) =
-            enchantment(definition).apply(init).build(key.identifier()).also {
-                registry[key] = it
-            }
-
-        register(LockedLoadedEnchantments.MULTICHAMBERED, definition(
+        registry[LockedLoadedEnchantments.MULTICHAMBERED] = enchantment(definition(
             crossbowEnchantable,
             4,
             3,
@@ -65,7 +71,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_FIRED_COUNT, SetValue(LevelBasedValue.constant(1f)))
         }
 
-        register(LockedLoadedEnchantments.PUMP_CHARGE, definition(
+        registry[LockedLoadedEnchantments.PUMP_CHARGE] = enchantment(definition(
             crossbowEnchantable,
             1,
             1,
@@ -82,7 +88,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(EnchantmentEffectComponents.PROJECTILE_COUNT, SetValue(LevelBasedValue.constant(2f)))
         }
 
-        register(LockedLoadedEnchantments.MAGAZINE, definition(
+        registry[LockedLoadedEnchantments.MAGAZINE] = enchantment(definition(
             crossbowEnchantable,
             1,
             4,
@@ -100,7 +106,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withSpecialEffect(EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, AddValue(LevelBasedValue.perLevel(2f)))
         }
 
-        register(LockedLoadedEnchantments.SHARPSHOOTING, definition(
+        registry[LockedLoadedEnchantments.SHARPSHOOTING] = enchantment(definition(
             crossbowEnchantable,
             1,
             3,
@@ -114,6 +120,62 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_IGNORE_OWNER, McUnit.INSTANCE)
             withEffect(EnchantmentEffectComponents.PROJECTILE_PIERCING, AddValue(LevelBasedValue.perLevel(1f)))
         }
+
+        registry[LockedLoadedEnchantments.ROCKETRY] = rocketry(crossbowEnchantable, crossbowExclusive, items, entities, true)
+
+        registry[LockedLoadedEnchantments.RECOVERY] = enchantment(definition(
+            crossbowEnchantable,
+            4,
+            1,
+            constantCost(10),
+            constantCost(50),
+            1,
+            EquipmentSlotGroup.MAINHAND
+        )) {
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_PERSIST, McUnit.INSTANCE)
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_OWNER_PICKUP, McUnit.INSTANCE)
+        }
+
+        registry[LockedLoadedEnchantments.TWIRLING_CURSE] = enchantment(definition(
+            crossbowEnchantable,
+            1,
+            1,
+            constantCost(25),
+            constantCost(50),
+            8,
+            EquipmentSlotGroup.MAINHAND
+        )) {
+            withSpecialEffect(LockedLoadedEnchantmentEffects.CROSSBOW_SPIN, LevelBasedValue.constant(20f))
+        }
+    }
+
+    fun rocketry(
+        crossbowEnchantable: HolderSet.Named<Item>,
+        crossbowExclusive: HolderSet.Named<Enchantment>,
+        items: HolderGetter<Item>,
+        entities: HolderGetter<EntityType<*>>,
+        mount: Boolean,
+    ): Builder = enchantment(
+        definition(
+            crossbowEnchantable,
+            1,
+            1,
+            constantCost(30),
+            constantCost(50),
+            8,
+            EquipmentSlotGroup.MAINHAND
+        )
+    ) {
+        exclusiveWith(crossbowExclusive)
+
+        withSpecialEffect(
+            LockedLoadedEnchantmentEffects.SUPPORTED_PROJECTILES, SupportedItems(
+                ItemPredicate {
+                    of(items, Items.FIREWORK_ROCKET)
+                },
+                replace = true
+            )
+        )
 
         fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): LootItemFunction = filteredFunction(
             ItemPredicate {
@@ -133,75 +195,34 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             onPass = fireworks
         )
 
-        register(LockedLoadedEnchantments.ROCKETRY, definition(
-            crossbowEnchantable,
-            1,
-            1,
-            constantCost(30),
-            constantCost(50),
-            8,
-            EquipmentSlotGroup.MAINHAND
-        )) {
-            exclusiveWith(crossbowExclusive)
-
-            withSpecialEffect(LockedLoadedEnchantmentEffects.SUPPORTED_PROJECTILES, SupportedItems(
-                ItemPredicate {
-                    of(items, Items.FIREWORK_ROCKET)
-                },
-                replace = true
-            ))
-
-            withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of(listOf(
+        withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of(
+            listOf(
                 fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL), explosions = ConstantInt(1)), Ints.atMost(1)),
                 fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER), explosions = ConstantInt(2)), Ints.exactly(2)),
                 fireworksModifier(RandomFireworks(explosions = ConstantInt(3)), Ints.atLeast(3)),
-            )))
+            )
+        ))
 
-            withSpecialEffect(LockedLoadedEnchantmentEffects.DEFAULT_PROJECTILE_ITEM, PreviewedLootTable(
-                LootTable {
-                    setParamSet(LootContextParamSets.ENCHANTED_ENTITY)
-                    pool {
-                        item(Items.FIREWORK_ROCKET)
-                    }
-                },
-                ItemStackTemplate(Items.FIREWORK_ROCKET)
-            ))
+        withSpecialEffect(LockedLoadedEnchantmentEffects.DEFAULT_PROJECTILE_ITEM, PreviewedLootTable(
+            LootTable {
+                setParamSet(LootContextParamSets.ENCHANTED_ENTITY)
+                pool {
+                    item(Items.FIREWORK_ROCKET)
+                }
+            },
+            ItemStackTemplate(Items.FIREWORK_ROCKET)
+        ))
 
-            withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, FireworkKnockback(
-                base = LevelBasedValue.constant(1.5f),
-                perExtraExplosion = LevelBasedValue.constant(0.5f)
-            ))
+        withEffect(LockedLoadedEnchantmentEffects.FIREWORK_OWNER_KNOCKBACK, FireworkKnockback(
+            base = LevelBasedValue.constant(1.5f),
+            perExtraExplosion = LevelBasedValue.constant(0.5f)
+        ))
 
+        if (mount)
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MOUNTABLE, McUnit.INSTANCE, allOf(
                 LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate {
                     of(entities, EntityTypes.FIREWORK_ROCKET)
                 }),
             ))
-        }
-
-        register(LockedLoadedEnchantments.RECOVERY, definition(
-            crossbowEnchantable,
-            4,
-            1,
-            constantCost(10),
-            constantCost(50),
-            1,
-            EquipmentSlotGroup.MAINHAND
-        )) {
-            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_PERSIST, McUnit.INSTANCE)
-            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_OWNER_PICKUP, McUnit.INSTANCE)
-        }
-
-        register(LockedLoadedEnchantments.TWIRLING_CURSE, definition(
-            crossbowEnchantable,
-            1,
-            1,
-            constantCost(25),
-            constantCost(50),
-            8,
-            EquipmentSlotGroup.MAINHAND
-        )) {
-            withSpecialEffect(LockedLoadedEnchantmentEffects.CROSSBOW_SPIN, LevelBasedValue.constant(20f))
-        }
     }
 }
