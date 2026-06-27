@@ -23,5 +23,9 @@ object LockedLoadedDataGenerator : DataGeneratorEntrypoint {
 			addProvider(::LangGenerator)
 			addProvider(::LootTableGenerator)
 		}
+
+		with (fabricDataGenerator.createBuiltinResourcePack(LockedLoaded.NO_ROCKET_RIDING)) {
+			addProvider(::NoRocketRidingEnchantmentGenerator)
+		}
 	}
 }
