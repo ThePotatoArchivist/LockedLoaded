@@ -5,20 +5,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly",
-              "options": [
-                "lockedloaded:pump_charge",
-                "lockedloaded:sharpshooting",
-                "lockedloaded:rocketry"
-              ]
-            }
-          ],
+          "modifier": {
+            "type": "minecraft:enchant_randomly",
+            "options": [
+              "lockedloaded:pump_charge",
+              "lockedloaded:sharpshooting",
+              "lockedloaded:rocketry"
+            ]
+          },
           "name": "minecraft:book"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ]
 }

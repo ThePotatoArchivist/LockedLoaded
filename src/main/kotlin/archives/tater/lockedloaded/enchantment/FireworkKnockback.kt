@@ -31,7 +31,7 @@ data class FireworkKnockback(val base: LevelBasedValue, val perExtraExplosion: L
 
             val offset = entity.centerPos - firework.position()
             entity.deltaMovement = (if (entity.onGround()) oldMovement.with(Direction.Axis.Y, 0.0) else oldMovement) + offset.normalize() * (knockback * (1 - offset.length() / radius))
-            entity.hurtMarked = true
+            entity.syncImpulse()
             if (entity == firework.owner) {
                 entity.setIgnoreFallDamageFromCurrentImpulse(true, entity.position())
                 entity[LockedLoadedAttachments.DISCARD_FRICTION_CURRENT_IMPULSE] = McUnit.INSTANCE

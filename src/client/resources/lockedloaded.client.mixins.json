@@ -10,10 +10,14 @@
   },
   "mixins": [
     "enchantmenteffect.spin.ArmedEntityRenderStateMixin",
+    "enchantmenteffect.spin.FirstPersonHandsAndItemsMixin",
+    "enchantmenteffect.spin.FirstPersonHandsAndItemsRendererMixin",
     "enchantmenteffect.spin.HumanoidModelMixin",
     "enchantmenteffect.spin.ItemInHandLayerMixin",
-    "enchantmenteffect.spin.ItemInHandRendererMixin",
     "enchantmenteffect.spin.LocalPlayerMixin",
     "rocketride.HumanoidMobRendererMixin"
-  ]
+  ],
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  }
 }

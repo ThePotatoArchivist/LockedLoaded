@@ -48,9 +48,10 @@ public class ProjectileWeaponItemMixin {
             if (!projectile.has(DataComponents.INTANGIBLE_PROJECTILE))
                 shooter.handleExtraItemsCreatedOnUse(projectile);
         }
-        for (var projectile : chargedProjectiles.get().itemCopies())
+        chargedProjectiles.get().itemCopies().forEach(projectile -> {
             if (!projectile.has(DataComponents.INTANGIBLE_PROJECTILE))
                 shooter.handleExtraItemsCreatedOnUse(projectile);
+        });
 
         return true;
     }

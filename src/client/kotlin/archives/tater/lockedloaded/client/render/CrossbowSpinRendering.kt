@@ -61,8 +61,8 @@ object CrossbowSpinRendering {
         val f = if (leftHand) -1 else 1
 
         poseStack.translate(0.5f / 16 * f, 0f, 5f / 16)
-        if (tilt) poseStack.mulPose(Axis.ZN.rotation(getCrossbowSpinTilt(leftHand)))
-        poseStack.mulPose(Axis.YP.rotation(-3f * TWO_PI / 20 * ticksUsingItem * f))
+        if (tilt) poseStack.rotate(Axis.ZN.rotation(getCrossbowSpinTilt(leftHand)))
+        poseStack.rotate(Axis.YP.rotation(-3f * TWO_PI / 20 * ticksUsingItem * f))
         poseStack.translate(-0.5f / 16 * f, 0f, -5f / 16)
     }
 

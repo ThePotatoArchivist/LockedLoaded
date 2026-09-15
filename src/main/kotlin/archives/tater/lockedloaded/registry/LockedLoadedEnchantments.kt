@@ -29,7 +29,7 @@ object LockedLoadedEnchantments {
 
     internal fun init() {
         EnchantmentEvents.MODIFY_WITH_LOOKUP.register { key, builder, source, _ ->
-            if (source.isBuiltin && key == Enchantments.PIERCING) builder.apply {
+            if (source.isBuiltIn && key == Enchantments.PIERCING) builder.apply {
                 withEffect(PROJECTILE_PIERCE_DEFLECTION, [
                     PierceDeflection.SHIELD,
                     PierceDeflection.SHULKER_SHELL,

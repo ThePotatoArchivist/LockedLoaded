@@ -1,0 +1,11 @@
+// 26.3-rc-3	-999999999-01-01T00:00:00	Locked & Loaded/Tags for minecraft:enchantment
+e983620a0a88612ce78a919a9820ee6dac149295 data/lockedloaded/tags/enchantment/exclusive_set/magazine.json
+313bbdf65e0eef2dd890223e37bd50d64120943d data/lockedloaded/tags/enchantment/exclusive_set/multichambered.json
+f084f6cd62cadef12b6a2ef515137e279a0c90c9 data/lockedloaded/tags/enchantment/raid_pillager_post_wave_5_rare.json
+5ee0fe779b02d430f95010140efb6af64bbc6b30 data/minecraft/tags/enchantment/curse.json
+c8f9325ff54607a785f3d20ba6787df794c0403e data/minecraft/tags/enchantment/exclusive_set/crossbow.json
+07d112aebfe3543c1af8608a8d5a8becd86c65e7 data/minecraft/tags/enchantment/non_treasure.json
+5ee0fe779b02d430f95010140efb6af64bbc6b30 data/minecraft/tags/enchantment/treasure.json
+091401e86feba444cf7d3e2e2d051e1c75707764 data/penchant/tags/enchantment/common.json
+39b6389ddfcb281bb8c1b07f129b39280eddff45 data/penchant/tags/enchantment/rare.json
+741831d887795bbcebc921ecb100d1fbc05d9a4d data/penchant/tags/enchantment/uncommon.json

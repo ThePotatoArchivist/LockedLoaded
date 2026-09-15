@@ -8,12 +8,13 @@ import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.predicates.CollectionPredicate
 import net.minecraft.advancements.predicates.MinMaxBounds.Ints
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
-import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.predicates.DataComponentPredicates
 import net.minecraft.core.component.predicates.FireworksPredicate
 import net.minecraft.core.registries.Registries
+import net.minecraft.core.registries.SingleRegistryBootstrap
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
@@ -41,7 +42,7 @@ import net.minecraft.world.level.storage.loot.predicates.AllOfCondition.allOf
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
 import java.util.*
 
-object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
+object EnchantmentGenerator : SingleRegistryBootstrap<Enchantment> {
     fun enchantment(definition: EnchantmentDefinition, init: Enchantment.Builder.() -> Unit) =
         enchantment(definition).apply(init)
 
@@ -177,7 +178,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             )
         )
 
-        fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): LootItemFunction = filteredFunction(
+        fun fireworksModifier(fireworks: RandomFireworks, duration: Ints): Holder<LootItemFunction> = Holder.direct(filteredFunction(
             ItemPredicate {
                 withComponents {
                     partial(DataComponentPredicates.FIREWORKS, FireworksPredicate(
@@ -193,7 +194,7 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
                 }
             },
             onPass = fireworks
-        )
+        ))
 
         withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of([
             fireworksModifier(RandomFireworks(shapes = [Shape.SMALL_BALL], explosions = ConstantInt(1)), Ints.atMost(1)),

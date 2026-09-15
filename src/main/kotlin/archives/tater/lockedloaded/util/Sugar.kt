@@ -28,13 +28,12 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
-import net.minecraft.world.level.chunk.EmptyLevelChunk
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
 import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
+import net.minecraft.world.level.storage.loot.entries.UniformContainerBase
 import net.minecraft.world.level.storage.loot.functions.FilteredFunction
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.phys.Vec3
@@ -79,8 +78,8 @@ fun DataComponentMatchers.Builder.hasAny(type: DataComponentType<*>) {
 
 fun filteredFunction(filter: ItemPredicate, onPass: LootItemFunction? = null, onFail: LootItemFunction? = null): LootItemFunction =
     FilteredFunction.filtered(filter).apply {
-        onPass(Optional.ofNullable(onPass))
-        onFail(Optional.ofNullable(onFail))
+        onPass?.let(::onPass)
+        onFail?.let(::onFail)
     }.build()
 
 fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder =
@@ -93,7 +92,7 @@ fun LootTable.Builder.pool(init: LootPool.Builder.() -> Unit) {
     pool(LootPool.lootPool().apply(init).build())
 }
 
-fun LootPool.Builder.item(item: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit = {}) {
+fun LootPool.Builder.item(item: ItemLike, init: UniformContainerBase.Builder<*>.() -> Unit = {}) {
     add(LootItem.lootTableItem(item).apply(init))
 }
 
@@ -101,7 +100,7 @@ fun LootPool.Builder.empty(weight: Int) {
     add(EmptyLootItem.emptyItem().setWeight(weight))
 }
 
-operator fun <T: Any> LootContext.get(key: ContextKey<T>): T = getParameter(key)
+operator fun <T: Any> LootContext.get(key: ContextKey<T>): T? = getOptional(key)
 
 typealias McUnit = net.minecraft.util.Unit
 

@@ -1,7 +1,8 @@
 package archives.tater.lockedloaded.registry
 
 import archives.tater.lockedloaded.LockedLoaded
-import archives.tater.lockedloaded.mixin.LootContextParamSetsAccessor
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.context.ContextKeySet
 import net.minecraft.world.entity.projectile.Projectile
@@ -16,7 +17,7 @@ object LockedLoadedLootContext {
         .apply(init)
         .build()
         .also {
-            LootContextParamSetsAccessor.getREGISTRY()[LockedLoaded.id(path)] = it
+            Registry.register(BuiltInRegistries.CONTEXT_KEY_SET, LockedLoaded.id(path), it)
         }
 
     @JvmField

@@ -24,14 +24,14 @@ object LockedLoadedLoot {
     val TRIAL_CHAMBERS_REWARD_RARE = injectOf(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE, poolWeight = 2)
 
     fun init() {
-        LootTableEvents.MODIFY.register { key, tableBuilder, _, _ ->
+        LootTableEvents.MODIFY.register { key, tableBuilder, source, holder ->
             val (table, poolWeight) = INJECTS[key] ?: return@register
             if (poolWeight == null)
                 tableBuilder.withPool(lootPool()
-                    .add(lootTableReference(table)))
+                    .add(lootTableReference(holder.getOrThrow(table))))
             else
                 tableBuilder.modifyPools {
-                    it.add(lootTableReference(table)
+                    it.add(lootTableReference(holder.getOrThrow(table))
                         .setWeight(poolWeight))
                 }
         }

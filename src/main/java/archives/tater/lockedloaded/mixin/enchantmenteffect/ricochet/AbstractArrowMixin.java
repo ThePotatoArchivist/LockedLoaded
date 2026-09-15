@@ -8,7 +8,6 @@ import archives.tater.lockedloaded.util.LockedLoadedUtil;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -115,25 +114,17 @@ public abstract class AbstractArrowMixin extends Projectile {
 
     @WrapOperation(
             method = "onHitEntity",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;deflect(Lnet/minecraft/world/entity/projectile/ProjectileDeflection;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EntityReference;Z)Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;deflect(Lnet/minecraft/world/entity/projectile/ProjectileDeflection;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EntityReference;ZD)Z")
     )
-    private boolean ricochetEntity(AbstractArrow instance, ProjectileDeflection projectileDeflection, Entity entity, EntityReference<Entity> entityReference, boolean b, Operation<Boolean> original, EntityHitResult entityHitResult, @Share("ricocheted") LocalBooleanRef ricocheted) {
+    private boolean ricochetEntity(AbstractArrow instance, ProjectileDeflection projectileDeflection, Entity entity, EntityReference<Entity> entityReference, boolean byAttack, double power, Operation<Boolean> original, EntityHitResult hitResult, @Share("ricocheted") LocalBooleanRef ricocheted) {
         byte ricochetLevel = getAttachedOrElse(LockedLoadedAttachments.RICOCHET_LEVEL, (byte) 0);
-        if (ricochetLevel <= 0) return original.call(instance, projectileDeflection, entity, entityReference, b);
+        if (ricochetLevel <= 0) return original.call(instance, projectileDeflection, entity, entityReference, byAttack, power);
 
-        ricochet(entityHitResult.getLocation(), LockedLoadedUtil.getDirection(entity, entityHitResult.getLocation()), ricochetLevel);
+        ricochet(hitResult.getLocation(), LockedLoadedUtil.getDirection(entity, hitResult.getLocation()), ricochetLevel);
         ricocheted.set(true);
         this.ricocheted = true;
 
         return true;
-    }
-    
-    @WrapWithCondition(
-            method = "onHitEntity",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V")
-    )
-    private boolean skipMovementDecrease(AbstractArrow instance, Vec3 vec3, @Share("ricocheted") LocalBooleanRef ricocheted) {
-        return !ricocheted.get();
     }
 
     @Definition(id = "NONE", field = "Lnet/minecraft/world/entity/projectile/ProjectileDeflection;NONE:Lnet/minecraft/world/entity/projectile/ProjectileDeflection;")

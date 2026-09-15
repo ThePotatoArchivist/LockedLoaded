@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 
-@Mixin(EnderMan.class)
+@Mixin(Enderman.class)
 public class EnderManMixin {
 
     @WrapOperation(

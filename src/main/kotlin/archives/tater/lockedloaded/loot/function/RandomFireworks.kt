@@ -4,6 +4,7 @@ import archives.tater.lockedloaded.util.pick
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.RandomSource
 import net.minecraft.util.valueproviders.ConstantInt
@@ -22,7 +23,7 @@ import java.util.stream.IntStream
 import kotlin.jvm.optionals.getOrNull
 
 class RandomFireworks(
-    predicates: List<LootItemCondition> = [],
+    predicate: Optional<Holder<LootItemCondition>> = Optional.empty(),
     val shapes: List<FireworkExplosion.Shape> = ALL_SHAPES,
     val duration: Optional<IntProvider> = Optional.empty(),
     val explosions: IntProvider = ONE,
@@ -30,7 +31,7 @@ class RandomFireworks(
     val fadeColors: IntProvider = ConstantInt.ZERO,
     val trailChance: Float = 0f,
     val twinkleChance: Float = 0f,
-) : LootItemConditionalFunction(predicates) {
+) : LootItemConditionalFunction(predicate) {
     private fun generateExplosion(random: RandomSource) = FireworkExplosion(
         pick(shapes, random),
         generateColors(colors.sample(random), random),

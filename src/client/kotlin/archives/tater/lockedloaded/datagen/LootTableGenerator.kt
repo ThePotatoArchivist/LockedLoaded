@@ -55,4 +55,8 @@ class LootTableGenerator(
             }
         })
     }
+
+    override fun run() {
+        TODO("Not yet implemented")
+    }
 }
