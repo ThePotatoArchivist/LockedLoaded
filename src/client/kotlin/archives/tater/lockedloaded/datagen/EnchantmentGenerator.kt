@@ -195,13 +195,11 @@ object EnchantmentGenerator : RegistrySetBuilder.RegistryBootstrap<Enchantment> 
             onPass = fireworks
         )
 
-        withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of(
-            listOf(
-                fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL), explosions = ConstantInt(1)), Ints.atMost(1)),
-                fireworksModifier(RandomFireworks(shapes = listOf(Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER), explosions = ConstantInt(2)), Ints.exactly(2)),
-                fireworksModifier(RandomFireworks(explosions = ConstantInt(3)), Ints.atLeast(3)),
-            )
-        ))
+        withEffect(LockedLoadedEnchantmentEffects.MODIFY_PROJECTILE_ITEM, SequenceFunction.of([
+            fireworksModifier(RandomFireworks(shapes = [Shape.SMALL_BALL], explosions = ConstantInt(1)), Ints.atMost(1)),
+            fireworksModifier(RandomFireworks(shapes = [Shape.SMALL_BALL, Shape.STAR, Shape.CREEPER], explosions = ConstantInt(2)), Ints.exactly(2)),
+            fireworksModifier(RandomFireworks(explosions = ConstantInt(3)), Ints.atLeast(3)),
+        ]))
 
         withSpecialEffect(LockedLoadedEnchantmentEffects.DEFAULT_PROJECTILE_ITEM, PreviewedLootTable(
             LootTable {

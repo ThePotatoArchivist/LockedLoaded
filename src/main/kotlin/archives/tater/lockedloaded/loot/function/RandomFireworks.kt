@@ -22,7 +22,7 @@ import java.util.stream.IntStream
 import kotlin.jvm.optionals.getOrNull
 
 class RandomFireworks(
-    predicates: List<LootItemCondition> = listOf(),
+    predicates: List<LootItemCondition> = [],
     val shapes: List<FireworkExplosion.Shape> = ALL_SHAPES,
     val duration: Optional<IntProvider> = Optional.empty(),
     val explosions: IntProvider = ONE,

@@ -28,15 +28,15 @@ object LockedLoadedEnchantments {
     @JvmField val RAID_PILLAGER_POST_WAVE_5_COMMON: ResourceKey<EnchantmentProvider> = ResourceKey.create(Registries.ENCHANTMENT_PROVIDER, LockedLoaded.id("raid_pillager_post_wave_5_common"))
 
     internal fun init() {
-        EnchantmentEvents.MODIFY.register { key, builder, source ->
+        EnchantmentEvents.MODIFY_WITH_LOOKUP.register { key, builder, source, _ ->
             if (source.isBuiltin && key == Enchantments.PIERCING) builder.apply {
-                withEffect(PROJECTILE_PIERCE_DEFLECTION, setOf(
+                withEffect(PROJECTILE_PIERCE_DEFLECTION, [
                     PierceDeflection.SHIELD,
                     PierceDeflection.SHULKER_SHELL,
                     PierceDeflection.BREEZE,
                     PierceDeflection.WITHER_ARMOR,
                     PierceDeflection.ENDER_DRAGON_PERCH,
-                ))
+                ])
             }
         }
 

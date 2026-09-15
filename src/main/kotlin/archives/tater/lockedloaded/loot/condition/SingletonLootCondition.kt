@@ -7,7 +7,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
 
 class SingletonLootCondition(vararg keys: ContextKey<*>, val test: (LootContext) -> Boolean) : LootItemCondition, LootItemCondition.Builder {
     val codec: MapCodec<SingletonLootCondition> = MapCodec.unit(this)
-    val keys = setOf(*keys)
+    val keys = keys.toSet()
 
     override fun codec(): MapCodec<out LootItemCondition> = codec
 
