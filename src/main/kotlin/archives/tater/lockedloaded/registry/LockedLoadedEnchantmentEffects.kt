@@ -55,6 +55,24 @@ object LockedLoadedEnchantmentEffects {
     ))
 
     @JvmField
+    val PROJECTILE_NO_GRAVITY = register("projectile_no_gravity", validatedListCodec(
+        ConditionalEffect.codec(McUnit.CODEC),
+        LootContextParamSets.ENCHANTED_ENTITY
+    ))
+
+    @JvmField
+    val PROJECTILE_DRAG = register("projectile_drag", validatedListCodec(
+        ConditionalEffect.codec(EnchantmentValueEffect.CODEC),
+        LootContextParamSets.ENCHANTED_ENTITY
+    ))
+
+    @JvmField
+    val PROJECTILE_MARGIN = register("projectile_margin", validatedListCodec(
+        ConditionalEffect.codec(EnchantmentValueEffect.CODEC),
+        LootContextParamSets.ENCHANTED_ENTITY
+    ))
+
+    @JvmField
     val CHARGED_PROJECTILE_INDICATOR = register("charged_projectile_indicator", ChargedProjectileIndicator.CODEC)
 
     @JvmField

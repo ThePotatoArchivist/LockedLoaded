@@ -32,6 +32,7 @@ class EnchantmentTagGenerator(
             +LockedLoadedEnchantments.PUMP_CHARGE
             +LockedLoadedEnchantments.SHARPSHOOTING
             +LockedLoadedEnchantments.ROCKETRY
+            +LockedLoadedEnchantments.SWARM
             +LockedLoadedEnchantments.RECOVERY
         }
         buildTag(EnchantmentTags.TREASURE) {
@@ -41,12 +42,12 @@ class EnchantmentTagGenerator(
             +LockedLoadedEnchantments.TWIRLING_CURSE
         }
         buildTag(EnchantmentTags.CROSSBOW_EXCLUSIVE) {
-            +LockedLoadedEnchantments.MAGAZINE
+            +LockedLoadedEnchantments.SWARM
             +LockedLoadedEnchantments.SHARPSHOOTING
             +LockedLoadedEnchantments.PUMP_CHARGE
             +LockedLoadedEnchantments.ROCKETRY
         }
-        buildTag(LockedLoadedEnchantmentTags.MAGAZINE_EXCLUSIVE) {
+        buildTag(LockedLoadedEnchantmentTags.SWARM_EXCLUSIVE) {
             +EnchantmentTags.CROSSBOW_EXCLUSIVE
             +Enchantments.QUICK_CHARGE
             +LockedLoadedEnchantments.MULTICHAMBERED
@@ -60,6 +61,7 @@ class EnchantmentTagGenerator(
             +LockedLoadedEnchantments.PUMP_CHARGE
             +LockedLoadedEnchantments.MULTICHAMBERED
             +LockedLoadedEnchantments.ROCKETRY
+            +LockedLoadedEnchantments.SWARM
             +LockedLoadedEnchantments.SHARPSHOOTING
         }
 
@@ -73,6 +75,7 @@ class EnchantmentTagGenerator(
             +LockedLoadedEnchantments.PUMP_CHARGE
             +LockedLoadedEnchantments.SHARPSHOOTING
             +LockedLoadedEnchantments.ROCKETRY
+            +LockedLoadedEnchantments.SWARM
         }
     }
 

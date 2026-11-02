@@ -18,7 +18,7 @@ object LockedLoadedEnchantments {
 
     @JvmField val MULTICHAMBERED = of("multichambered")
     @JvmField val PUMP_CHARGE = of("pump_charge")
-    @JvmField val MAGAZINE = of("magazine")
+    @JvmField val SWARM = of("swarm")
     @JvmField val SHARPSHOOTING = of("sharpshooting")
     @JvmField val ROCKETRY = of("rocketry")
     @JvmField val RECOVERY = of("recovery")

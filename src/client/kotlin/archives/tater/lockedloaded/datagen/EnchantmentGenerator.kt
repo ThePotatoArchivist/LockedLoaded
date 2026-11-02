@@ -8,6 +8,7 @@ import archives.tater.lockedloaded.registry.LockedLoadedEnchantments
 import archives.tater.lockedloaded.util.*
 import net.minecraft.advancements.predicates.CollectionPredicate
 import net.minecraft.advancements.predicates.MinMaxBounds.Ints
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
@@ -18,6 +19,7 @@ import net.minecraft.core.registries.SingleRegistryBootstrap
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
+import net.minecraft.tags.EntityTypeTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.entity.EntityType
@@ -33,14 +35,17 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.MultiplyValue
+import net.minecraft.world.item.enchantment.effects.ScaleExponentially
 import net.minecraft.world.item.enchantment.effects.SetValue
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.level.storage.loot.functions.SequenceFunction
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.predicates.AllOfCondition.allOf
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
 import java.util.*
+import kotlin.math.log
 
 object EnchantmentGenerator : SingleRegistryBootstrap<Enchantment> {
     fun enchantment(definition: EnchantmentDefinition, init: Enchantment.Builder.() -> Unit) =
@@ -89,22 +94,35 @@ object EnchantmentGenerator : SingleRegistryBootstrap<Enchantment> {
             withEffect(EnchantmentEffectComponents.PROJECTILE_COUNT, SetValue(LevelBasedValue.constant(2f)))
         }
 
-        registry[LockedLoadedEnchantments.MAGAZINE] = enchantment(definition(
+        registry[LockedLoadedEnchantments.SWARM] = enchantment(definition(
             crossbowEnchantable,
             1,
             4,
-            dynamicCost(20, 10),
+            dynamicCost(20, 5),
             constantCost(50),
             8,
             EquipmentSlotGroup.MAINHAND
         )) {
-            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantmentTags.MAGAZINE_EXCLUSIVE))
+            exclusiveWith(enchantments.getOrThrow(LockedLoadedEnchantmentTags.SWARM_EXCLUSIVE))
             withEffect(EnchantmentEffectComponents.PROJECTILE_COUNT, SetValue(LevelBasedValue.perLevel(4f)))
             withSpecialEffect(LockedLoadedEnchantmentEffects.CHARGED_PROJECTILE_INDICATOR, ChargedProjectileIndicator(LevelBasedValue.perLevel(4f)))
             withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_FIRED_COUNT, SetValue(LevelBasedValue.constant(1f)))
-            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_UNCERTAINTY, ProjectileUncertainty(projectileCount = AddValue(LevelBasedValue.perLevel(0.5f))))
-            withEffect(LockedLoadedEnchantmentEffects.CROSSBOW_COOLDOWN, AddValue(LevelBasedValue.constant(0.5f)))
-            withSpecialEffect(EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, AddValue(LevelBasedValue.perLevel(2f)))
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_NO_GRAVITY, McUnit.INSTANCE)
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_DRAG, SetValue(LevelBasedValue.constant(1f)))
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_VELOCITY, MultiplyValue(LevelBasedValue.perLevel(0.2f, -0.05f)))
+            withEffect(LockedLoadedEnchantmentEffects.CROSSBOW_COOLDOWN, AddValue(LevelBasedValue.perLevel(0.5f, -0.1f)))
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_UNCERTAINTY, ProjectileUncertainty(enchantmentLevel = AddValue(LevelBasedValue.perLevel(2f, 4f))),
+                InvertedLootItemCondition.invert(LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate {
+                    entityType(EntityTypePredicate.of(entities, EntityTypes.PLAYER))
+                }))
+            )
+            withEffect(LockedLoadedEnchantmentEffects.PROJECTILE_MARGIN, SetValue(LevelBasedValue.constant(0f)))
+            withEffect(EnchantmentEffectComponents.DAMAGE, ScaleExponentially(LevelBasedValue.constant(2f), LevelBasedValue.perLevel(log(2.5f, 2f), 1f)),
+                LootItemEntityPropertyCondition.hasProperties(EntityTarget.DIRECT_ATTACKER, EntityPredicate {
+                    entityType(EntityTypePredicate.of(entities, EntityTypeTags.ARROWS))
+                })
+            )
+            withSpecialEffect(EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, AddValue(LevelBasedValue.constant(1f)))
         }
 
         registry[LockedLoadedEnchantments.SHARPSHOOTING] = enchantment(definition(

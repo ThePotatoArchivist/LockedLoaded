@@ -18,7 +18,7 @@ class LangGenerator(packOutput: FabricPackOutput, registryLookup: CompletableFut
     override fun generateTranslations(registryLookup: HolderLookup.Provider, translationBuilder: TranslationBuilder) {
         translationBuilder.addEnchantment(LockedLoadedEnchantments.MULTICHAMBERED, "Multichambered", "allows loading multiple shots by crouching, then firing them in sequence")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.PUMP_CHARGE, "Pump Charge", "allows loading multiple shots by crouching, then firing them all at once in a spread")
-        translationBuilder.addEnchantment(LockedLoadedEnchantments.MAGAZINE, "Magazine", "loads many shots with a long charge time, then lets you fire them in sequence with a short cooldown")
+        translationBuilder.addEnchantment(LockedLoadedEnchantments.SWARM, "Swarm", "loads many shots and fire slow, floating arrows")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.SHARPSHOOTING, "Sharpshooting", "makes arrows pierce mobs and ricochet off blocks")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.ROCKETRY, "Rocketry", "gives empty firework rockets explosions and allows rocket jumping and rocket riding")
         translationBuilder.addEnchantment(LockedLoadedEnchantments.RECOVERY, "Recovery", "prevents arrows from getting destroyed upon impact and being picked up by other players")

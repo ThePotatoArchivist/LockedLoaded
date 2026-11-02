@@ -73,6 +73,17 @@ object LockedLoadedAttachments {
         syncWith(McUnit.STREAM_CODEC, AttachmentSyncPredicate.all())
     }
 
+    @JvmField
+    val PROJECTILE_DRAG = register("projectile_drag") {
+        persistent(Codec.FLOAT)
+        syncWith(ByteBufCodecs.FLOAT, AttachmentSyncPredicate.all())
+    }
+
+    @JvmField
+    val PROJECTILE_MARGIN = register("projectile_margin") {
+        persistent(Codec.FLOAT)
+    }
+
     internal fun init() {
 
     }

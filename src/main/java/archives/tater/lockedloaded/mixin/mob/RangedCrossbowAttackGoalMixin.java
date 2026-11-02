@@ -2,6 +2,7 @@ package archives.tater.lockedloaded.mixin.mob;
 
 import archives.tater.lockedloaded.enchantment.LoadMultiple;
 import archives.tater.lockedloaded.registry.LockedLoadedComponents;
+import archives.tater.lockedloaded.registry.LockedLoadedEnchantmentEffects;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.objectweb.asm.Opcodes;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal.CrossbowState;
@@ -31,6 +33,11 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ChargedProjectiles;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+
+import org.apache.commons.lang3.mutable.MutableFloat;
+
+import static java.lang.Math.max;
 
 @Mixin(RangedCrossbowAttackGoal.class)
 public class RangedCrossbowAttackGoalMixin<T extends Monster & RangedAttackMob & CrossbowAttackMob> {
@@ -80,8 +87,23 @@ public class RangedCrossbowAttackGoalMixin<T extends Monster & RangedAttackMob &
             at = @At(value = "FIELD:LAST", target = "Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal$CrossbowState;UNCHARGED:Lnet/minecraft/world/entity/ai/goal/RangedCrossbowAttackGoal$CrossbowState;", opcode = Opcodes.GETSTATIC)
     )
     private CrossbowState useMultiple(CrossbowState original) {
-        if (!CrossbowItem.isCharged(mob.getItemInHand(ProjectileUtil.getWeaponHoldingHand(mob, Items.CROSSBOW)))) return original;
-        attackDelay = 10 + mob.getRandom().nextInt(10);
+        var stack = mob.getItemInHand(ProjectileUtil.getWeaponHoldingHand(mob, Items.CROSSBOW));
+        if (!CrossbowItem.isCharged(stack)) return original;
+        if (!(mob.level() instanceof ServerLevel serverLevel)) return CrossbowState.CHARGED;
+
+        var value = new MutableFloat(0);
+        EnchantmentHelper.runIterationOnItem(stack, (enchantment, enchantmentLevel) ->
+                enchantment.value().modifyEntityFilteredValue(
+                        LockedLoadedEnchantmentEffects.CROSSBOW_COOLDOWN,
+                        serverLevel,
+                        enchantmentLevel,
+                        stack,
+                        mob,
+                        value
+                )
+        );
+
+        attackDelay = max((int) (20 * value.floatValue()), 5);
         return RangedCrossbowAttackGoal.CrossbowState.CHARGED;
     }
 

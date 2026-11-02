@@ -1,0 +1,143 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.lockedloaded.swarm"
+  },
+  "effects": {
+    "lockedloaded:charged_projectile_indicator": {
+      "max_projectiles": {
+        "type": "minecraft:linear",
+        "base": 4.0,
+        "per_level_above_first": 4.0
+      }
+    },
+    "lockedloaded:crossbow_cooldown": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 0.5,
+            "per_level_above_first": -0.1
+          }
+        }
+      }
+    ],
+    "lockedloaded:projectile_drag": [
+      {
+        "effect": {
+          "type": "minecraft:set",
+          "value": 1.0
+        }
+      }
+    ],
+    "lockedloaded:projectile_fired_count": [
+      {
+        "effect": {
+          "type": "minecraft:set",
+          "value": 1.0
+        }
+      }
+    ],
+    "lockedloaded:projectile_margin": [
+      {
+        "effect": {
+          "type": "minecraft:set",
+          "value": 0.0
+        }
+      }
+    ],
+    "lockedloaded:projectile_no_gravity": [
+      {
+        "effect": {}
+      }
+    ],
+    "lockedloaded:projectile_uncertainty": [
+      {
+        "effect": {
+          "enchantment_level": {
+            "type": "minecraft:add",
+            "value": {
+              "type": "minecraft:linear",
+              "base": 2.0,
+              "per_level_above_first": 4.0
+            }
+          }
+        },
+        "requirements": {
+          "type": "minecraft:inverted",
+          "term": {
+            "type": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:entity_type": "minecraft:player"
+            }
+          }
+        }
+      }
+    ],
+    "lockedloaded:projectile_velocity": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": {
+            "type": "minecraft:linear",
+            "base": 0.2,
+            "per_level_above_first": -0.05
+          }
+        }
+      }
+    ],
+    "minecraft:crossbow_charge_time": {
+      "type": "minecraft:add",
+      "value": 1.0
+    },
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:exponential",
+          "base": 2.0,
+          "exponent": {
+            "type": "minecraft:linear",
+            "base": 1.3219281,
+            "per_level_above_first": 1.0
+          }
+        },
+        "requirements": {
+          "type": "minecraft:entity_properties",
+          "entity": "direct_attacker",
+          "predicate": {
+            "minecraft:entity_type": "#minecraft:arrows"
+          }
+        }
+      }
+    ],
+    "minecraft:projectile_count": [
+      {
+        "effect": {
+          "type": "minecraft:set",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 4.0,
+            "per_level_above_first": 4.0
+          }
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#lockedloaded:exclusive_set/swarm",
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 5
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/crossbow",
+  "weight": 1
+}

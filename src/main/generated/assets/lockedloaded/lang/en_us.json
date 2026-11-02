@@ -1,7 +1,4 @@
 {
-  "enchantment.lockedloaded.magazine": "Magazine",
-  "enchantment.lockedloaded.magazine.desc": "Loads many shots with a long charge time, then lets you fire them in sequence with a short cooldown",
-  "enchantment.lockedloaded.magazine.description": "An enchantment that loads many shots with a long charge time, then lets you fire them in sequence with a short cooldown",
   "enchantment.lockedloaded.multichambered": "Multichambered",
   "enchantment.lockedloaded.multichambered.desc": "Allows loading multiple shots by crouching, then firing them in sequence",
   "enchantment.lockedloaded.multichambered.description": "An enchantment that allows loading multiple shots by crouching, then firing them in sequence",
@@ -17,6 +14,9 @@
   "enchantment.lockedloaded.sharpshooting": "Sharpshooting",
   "enchantment.lockedloaded.sharpshooting.desc": "Makes arrows pierce mobs and ricochet off blocks",
   "enchantment.lockedloaded.sharpshooting.description": "An enchantment that makes arrows pierce mobs and ricochet off blocks",
+  "enchantment.lockedloaded.swarm": "Swarm",
+  "enchantment.lockedloaded.swarm.desc": "Loads many shots and fire slow, floating arrows",
+  "enchantment.lockedloaded.swarm.description": "An enchantment that loads many shots and fire slow, floating arrows",
   "enchantment.lockedloaded.twirling_curse": "Curse of Twirling",
   "enchantment.lockedloaded.twirling_curse.desc": "Makes you spin loaded crossbows to fire them",
   "enchantment.lockedloaded.twirling_curse.description": "An enchantment that makes you spin loaded crossbows to fire them"
